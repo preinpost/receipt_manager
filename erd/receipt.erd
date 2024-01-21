@@ -4,8 +4,8 @@
   "settings": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": 0,
-    "scrollLeft": 0,
+    "scrollTop": -102,
+    "scrollLeft": -37,
     "zoomLevel": 1,
     "show": 431,
     "database": 16,
@@ -45,8 +45,7 @@
         "columnIds": [
           "WKHsGlulawV8KLB3whj3W",
           "GFR5fA911UwqN4oIX3Up9",
-          "c-q1vUXl_A4sLu5H2hO7b",
-          "o1qKGGszcSg6Xf6pl1Vcs"
+          "c-q1vUXl_A4sLu5H2hO7b"
         ],
         "seqColumnIds": [
           "WKHsGlulawV8KLB3whj3W",
@@ -63,7 +62,7 @@
           "color": ""
         },
         "meta": {
-          "updateAt": 1705747694178,
+          "updateAt": 1705814486655,
           "createAt": 1705747222885
         }
       }
@@ -85,7 +84,7 @@
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1705747650693,
+          "updateAt": 1705814486655,
           "createAt": 1705747326183
         }
       },
@@ -94,18 +93,18 @@
         "tableId": "ZSbJBZHI1x2U5qt_N9r8b",
         "name": "payment_amount",
         "comment": "결제금액",
-        "dataType": "varchar",
+        "dataType": "varchar(16)",
         "default": "",
         "options": 0,
         "ui": {
           "keys": 0,
           "widthName": 95,
           "widthComment": 60,
-          "widthDataType": 60,
+          "widthDataType": 64,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1705748480654,
+          "updateAt": 1705814516640,
           "createAt": 1705747532914
         }
       },
@@ -114,18 +113,18 @@
         "tableId": "ZSbJBZHI1x2U5qt_N9r8b",
         "name": "payment_location",
         "comment": "결제한 곳",
-        "dataType": "varchar",
+        "dataType": "varchar(200)",
         "default": "",
         "options": 0,
         "ui": {
           "keys": 0,
           "widthName": 97,
           "widthComment": 60,
-          "widthDataType": 60,
+          "widthDataType": 70,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1705747689012,
+          "updateAt": 1705814691543,
           "createAt": 1705747604973
         }
       },
@@ -145,7 +144,7 @@
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1705747694178,
+          "updateAt": 1705803548015,
           "createAt": 1705747694178
         }
       }
@@ -199,7 +198,7 @@
       -1,
       {
         "name": 1705748480652,
-        "dataType": 1705747542674,
+        "dataType": 1705814516639,
         "comment": 1705747601186
       }
     ],
@@ -210,13 +209,13 @@
       {
         "name": 1705747668047,
         "comment": 1705747674611,
-        "dataType": 1705747689010
+        "dataType": 1705814691541
       }
     ],
     "o1qKGGszcSg6Xf6pl1Vcs": [
       "tableColumnEntities",
       1705747694175,
-      -1,
+      1705803580771,
       {}
     ],
     "Zlj8nuFwbpn4KBiFn7VUX": [
