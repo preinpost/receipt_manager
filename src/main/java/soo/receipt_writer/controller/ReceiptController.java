@@ -1,35 +1,28 @@
 package soo.receipt_writer.controller;
 
-import org.apache.ibatis.session.SqlSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import soo.receipt_writer.domain.Receipt;
+import soo.receipt_writer.service.ReceiptService;
+
+import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class ReceiptController {
 
-    private final SqlSession session;
-
-    public ReceiptController(SqlSession session) {
-        this.session = session;
-    }
-
-    @GetMapping("/hello")
-    public String hello() {
-        Object result = session.selectOne("DB_RECEIPT.selectOne");
-        System.out.println(result);
-
-        return "Hello, world!";
-    }
-
+    private final ReceiptService receiptService;
 
     @PostMapping("/addReceipt")
-    public String addReceipt() {
-        Object result = session.insert("DB_RECEIPT.insertOne");
-        System.out.println(result);
-
-        return "Hello, world!";
+    public void addReceipt(@RequestBody Receipt receipt) {
+        receiptService.insertOne(receipt);
     }
 
-
+    @GetMapping("/getReceipt")
+    public List<Receipt> getAllReceipt() {
+        return receiptService.selectAll();
+    }
 }

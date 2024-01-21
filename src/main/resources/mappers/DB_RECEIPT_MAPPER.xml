@@ -5,6 +5,10 @@
         SELECT * FROM DB_RECEIPT;
     </select>
 
+    <select id="selectAll" resultType="java.util.HashMap">
+        SELECT * FROM DB_RECEIPT;
+    </select>
+
     <insert id="insertOne" parameterType="soo.receipt_writer.domain.Receipt">
         INSERT INTO DB_RECEIPT (
              PAYMENT_DATE
