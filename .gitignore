@@ -36,6 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 
-### Node ###
+### Front ###
 node_modules
-*.css
+**/static/**/*.css
