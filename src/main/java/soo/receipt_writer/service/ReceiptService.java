@@ -19,7 +19,6 @@ public class ReceiptService {
 
     public void insertOne(Receipt receipt) {
         int insertCnt = session.insert("DB_RECEIPT.insertOne", receipt);
-        log.debug("insertCnt: {}", insertCnt);
     }
 
     public Receipt selectOne() {
