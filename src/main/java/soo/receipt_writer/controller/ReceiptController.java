@@ -18,7 +18,7 @@ public class ReceiptController {
 
     @PostMapping("/addReceipt")
     public void addReceipt(@RequestBody Receipt receipt) {
-        receiptService.insertOne(receipt);
+        receiptService.addReceipt(receipt);
     }
 
     @GetMapping("/getReceipt")

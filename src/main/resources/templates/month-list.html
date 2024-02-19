@@ -5,85 +5,66 @@
 <script type="text/javascript" th:src="@{/js/jsCalendar.lang.ko.js}"></script>
 <link rel="stylesheet" type="text/css" th:href="@{/css/jsCalendar.min.css}">
 <body>
-    <div class="container mx-auto">
-        <div class="text-lg m-10">2024년 1월</div>
-        <div class="flex flex-col container p-6 justify-center items-center">
-            <div class="flex justify-end w-full" onclick="my_modal_1.showModal()" >
-                <div class="cursor-pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50">
-                        <circle cx="25" cy="25" r="20" stroke="green" stroke-width="3" fill="green" />
-                        <line x1="25" y1="15" x2="25" y2="35" style="stroke:white;stroke-width:2" />
-                        <line x1="15" y1="25" x2="35" y2="25" style="stroke:white;stroke-width:2" />
-                    </svg>
-                </div>
-            </div>
-            <div class="card card-compact bg-blue-400 text-white w-72 my-3 px-2">
-                <div class="card-body">
-                    <p class="card-title">24.01.23</p>
-                    <div class="flex flex-col justify-end items-end text-lg">
-                        <p>21,300원</p>
-                        <p>순대국</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card card-compact bg-blue-400 text-white w-72 my-3 px-2">
-                <div class="card-body">
-                    <p class="card-title">24.01.23</p>
-                    <div class="flex flex-col justify-end items-end text-lg">
-                        <p>21,300원</p>
-                        <p>순대국</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card card-compact bg-blue-400 text-white w-72 my-3 px-2">
-                <div class="card-body">
-                    <p class="card-title">24.01.23</p>
-                    <div class="flex flex-col justify-end items-end text-lg">
-                        <p>21,300원</p>
-                        <p>순대국</p>
-                    </div>
-                </div>
-            </div>
+  <div class="container mx-auto">
+    <div class="text-lg m-10">2024년 1월</div>
+    <div class="flex flex-col container p-6 justify-center items-center">
+      <div class="flex justify-end w-full" onclick="my_modal_1.showModal()">
+        <div class="cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50">
+            <circle cx="25" cy="25" r="20" stroke="green" stroke-width="3" fill="green"/>
+            <line x1="25" y1="15" x2="25" y2="35" style="stroke:white;stroke-width:2"/>
+            <line x1="15" y1="25" x2="35" y2="25" style="stroke:white;stroke-width:2"/>
+          </svg>
         </div>
+      </div>
+      <div th:each="receipt : ${receiptList}" class="card card-compact bg-blue-400 text-white w-72 my-3 px-2">
+        <div class="card-body">
+          <p class="card-title" th:text="${receipt.getPaymentDateWithFormat()}"></p>
+          <div class="flex flex-col justify-end items-end text-lg">
+            <p th:text="${receipt.getPaymentAmountWithComma()}+'원'"></p>
+            <p th:text="${receipt.getPaymentLocation()}"></p>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- Open the modal using ID.showModal() method -->
-    <dialog id="my_modal_1" class="modal">
-        <div class="modal-box relative">
-            <div class="card card-compact">
-                <div class="card-body">
-                    <label class="form-control w-full text-black">
-                        <div class="label"><span class="label-text">날짜</span></div>
-                        <!-- <div id="add-calendar" class="absolute top-0 -left-6 w-[320px] !border-none"></div> -->
-                        <input id="date-field" type="text" placeholder="Type here" class="input input-bordered input-info w-full" onclick="toggleCalendar()" readonly/>
-                    </label>
+  </div>
+  <!-- Open the modal using ID.showModal() method -->
+  <dialog id="my_modal_1" class="modal">
+    <div class="modal-box relative">
+      <div class="card card-compact">
+        <div class="card-body">
+          <label class="form-control w-full text-black">
+            <div class="label"><span class="label-text">날짜</span></div>
 
-                    <label class="form-control w-full text-black">
-                        <div class="label"><span class="label-text">금액</span></div>
-                        <input type="text" placeholder="Type here" class="input input-bordered input-info w-full" />
-                    </label>
+            <input id="date-field" data-format="date" type="text" name="paymentDate" placeholder="Type here"
+                   class="input input-bordered input-info w-full"
+                   onclick="toggleCalendar()" readonly/>
+          </label>
 
-                    <label class="form-control w-full text-black">
-                        <div class="label"><span class="label-text">사용처</span></div>
-                        <input type="text" placeholder="Type here" class="input input-bordered input-info w-full" />
-                    </label>
-                </div>
-            </div>
-            <div class="modal-action">
-                <form action="">
-                    <button class="btn bg-green-400">추가</button>
-                </form>
+          <label class="form-control w-full text-black">
+            <div class="label"><span class="label-text">금액</span></div>
+            <input type="text" data-format="currency" name="paymentAmount" placeholder="Type here"
+                   class="input input-bordered input-info w-full"/>
+          </label>
 
-
-                <form method="dialog">
-                    <!-- if there is a button in form, it will close the modal -->
-                    <button class="btn bg-red-400">닫기</button>
-                </form>
-            </div>
-            <div id="add-calendar" class="absolute flex w-full h-full justify-center items-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden"></div>
+          <label class="form-control w-full text-black">
+            <div class="label"><span class="label-text">사용처</span></div>
+            <input type="text" name="paymentLocation" placeholder="Type here"
+                   class="input input-bordered input-info w-full"/>
+          </label>
         </div>
-    </dialog>
+      </div>
+      <div class="modal-action">
+        <button id="add-receipt-btn" class="btn bg-green-400">추가</button>
+        <form method="dialog">
+          <!-- if there is a button in form, it will close the modal -->
+          <button class="btn bg-red-400">닫기</button>
+        </form>
+      </div>
+      <div id="add-calendar"
+           class="absolute flex w-full h-full justify-center items-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden"></div>
+    </div>
+  </dialog>
 </body>
 </html>
 <script defer>
@@ -95,16 +76,23 @@
   myCalendar.setLanguage("ko");
   myCalendar.select([new Date()]);
 
-
-  myCalendar.onDateClick(function(event, date){
+  // 캘린터 dateClick event 함수
+  myCalendar.onDateClick(function (event, date) {
     dateField.value = formatDateWithDot(date);
     myCalendar.clearselect();
     myCalendar.select([date]);
     toggleCalendar();
   });
 
+  // 캘린더 show/hidden toggle 함수
   function toggleCalendar() {
     calendarElement.classList.toggle("hidden");
+  }
+
+  function plainNumberToCommaNumber(number) {
+    return  new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'WON' }).format(
+      number,
+    )
   }
 
   /// YYYYDDMM 형태로 리턴
@@ -132,5 +120,37 @@
 
     return `${year}.${month}.${day}`;
   }
+
+  document.querySelector('#add-receipt-btn').addEventListener('click', () => {
+
+    const req = {};
+    const inputEl = document.querySelectorAll('#my_modal_1 .card-body input');
+
+    _.map(inputEl, (el) => {
+      req[el.name] = el.value.replace(/\./g,"");
+    });
+
+    console.log(req)
+
+    fetch('/addReceipt', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(req),
+    })
+      .then(response => response.json()) // 응답을 JSON으로 파싱
+      .then(data => {
+
+        // input 초기화
+        _.map(inputEl, (el) => {
+          el.value = "";
+        });
+        myCalendar.clearselect();
+
+        document.querySelector('#my_modal_1').close();
+      })
+      .catch((error) => console.error('Error:', error)); // 에러 처리
+  })
 
 </script>
