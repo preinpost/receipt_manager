@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/jsCalendar.min.css}">
 <body>
   <div class="container mx-auto">
-    <div class="text-lg m-10">2024년 1월</div>
+    <div class="text-lg m-10" th:text="${year + '년 ' + month + '월'}"></div>
     <div class="flex flex-col container p-6 justify-center items-center">
       <div class="flex justify-end w-full" onclick="my_modal_1.showModal()">
         <div class="cursor-pointer">
@@ -142,13 +142,14 @@
       .then(response => response.json()) // 응답을 JSON으로 파싱
       .then(data => {
 
+        console.log("data = ", data);
+
         // input 초기화
         _.map(inputEl, (el) => {
           el.value = "";
         });
-        myCalendar.clearselect();
 
-        document.querySelector('#my_modal_1').close();
+        location.reload();
       })
       .catch((error) => console.error('Error:', error)); // 에러 처리
   })

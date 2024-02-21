@@ -14,6 +14,6 @@ class ReceiptServiceTest {
     @Test
     void addReceipt() {
         Receipt receipt = new Receipt("2024-01-24", "10000", "서울시 강남구 역삼동");
-        receiptService.insertOne(receipt);
+        receiptService.addReceipt(receipt);
     }
 }

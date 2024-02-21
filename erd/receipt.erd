@@ -4,7 +4,7 @@
   "settings": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": -28,
+    "scrollTop": -27,
     "scrollLeft": -38,
     "zoomLevel": 1,
     "show": 431,
@@ -57,12 +57,12 @@
           "x": 499,
           "y": 295,
           "zIndex": 2,
-          "widthName": 70,
+          "widthName": 75,
           "widthComment": 60,
           "color": ""
         },
         "meta": {
-          "updateAt": 1705814486655,
+          "updateAt": 1708352405114,
           "createAt": 1705747222885
         }
       }
@@ -73,18 +73,18 @@
         "tableId": "ZSbJBZHI1x2U5qt_N9r8b",
         "name": "payment_date",
         "comment": "결제날짜",
-        "dataType": "date",
+        "dataType": "varchar(8)",
         "default": "",
         "options": 8,
         "ui": {
           "keys": 0,
-          "widthName": 77,
+          "widthName": 83,
           "widthComment": 60,
-          "widthDataType": 60,
+          "widthDataType": 61,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1705814486655,
+          "updateAt": 1708352413067,
           "createAt": 1705747326183
         }
       },
@@ -98,13 +98,13 @@
         "options": 0,
         "ui": {
           "keys": 0,
-          "widthName": 95,
+          "widthName": 100,
           "widthComment": 60,
-          "widthDataType": 64,
+          "widthDataType": 67,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1705814516640,
+          "updateAt": 1708352405114,
           "createAt": 1705747532914
         }
       },
@@ -118,13 +118,13 @@
         "options": 0,
         "ui": {
           "keys": 0,
-          "widthName": 97,
+          "widthName": 103,
           "widthComment": 60,
-          "widthDataType": 70,
+          "widthDataType": 76,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1705814691543,
+          "updateAt": 1708352405114,
           "createAt": 1705747604973
         }
       },
@@ -152,24 +152,7 @@
     "relationshipEntities": {},
     "indexEntities": {},
     "indexColumnEntities": {},
-    "memoEntities": {
-      "Zlj8nuFwbpn4KBiFn7VUX": {
-        "id": "Zlj8nuFwbpn4KBiFn7VUX",
-        "value": "",
-        "ui": {
-          "x": 200,
-          "y": 101,
-          "zIndex": 79,
-          "width": 116,
-          "height": 100,
-          "color": ""
-        },
-        "meta": {
-          "updateAt": 1705747861584,
-          "createAt": 1705747861584
-        }
-      }
-    }
+    "memoEntities": {}
   },
   "lww": {
     "ZSbJBZHI1x2U5qt_N9r8b": [
@@ -187,7 +170,7 @@
       -1,
       {
         "name": 1705747650692,
-        "dataType": 1705747388548,
+        "dataType": 1708352413067,
         "options(notNull)": 1705747519705,
         "comment": 1705747525285
       }
@@ -216,12 +199,6 @@
       "tableColumnEntities",
       1705747694175,
       1705803580771,
-      {}
-    ],
-    "Zlj8nuFwbpn4KBiFn7VUX": [
-      "memoEntities",
-      1705747861581,
-      1705747863346,
       {}
     ]
   }

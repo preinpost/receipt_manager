@@ -1,23 +1,26 @@
 package soo.receipt_writer.domain;
 
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @Slf4j
 @Data
 @AllArgsConstructor
 public class Receipt {
+
+    @NotEmpty @Size(min = 8, max = 8)
     private String paymentDate;
+
+    @NotEmpty @Digits(integer = 13, fraction = 0) @Min(0)
     private String paymentAmount;
+
+    @NotEmpty @Size(max = 20)
     private String paymentLocation;
 
     public String getPaymentDateWithFormat() {

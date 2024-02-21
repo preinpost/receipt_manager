@@ -36,6 +36,8 @@ public class PageController {
 
         log.debug("receiptList = {}", receiptList);
 
+        model.addAttribute("year", pageParams.year());
+        model.addAttribute("month", pageParams.month());
         model.addAttribute("receiptList", receiptList);
 
         return "month-list";
