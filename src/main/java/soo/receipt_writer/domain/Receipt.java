@@ -1,8 +1,12 @@
 package soo.receipt_writer.domain;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.NumberFormat;
@@ -10,7 +14,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Slf4j
-@Data
+@Getter @Setter
 @AllArgsConstructor
 public class Receipt {
 

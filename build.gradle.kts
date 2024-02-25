@@ -41,7 +41,9 @@ dependencies {
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3")
     implementation("org.springframework.session:spring-session-core")
     implementation("com.h2database:h2:2.1.210")
+    implementation("com.github.f4b6a3:uuid-creator:5.3.3")
 
+    // webauthn
     implementation("com.webauthn4j:webauthn4j-core:0.22.0.RELEASE")
     implementation("com.webauthn4j:webauthn4j-metadata:0.22.0.RELEASE")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.15.2")

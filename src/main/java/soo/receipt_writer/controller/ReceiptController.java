@@ -22,7 +22,7 @@ public class ReceiptController {
     private final ReceiptService receiptService;
 
     @PostMapping("/addReceipt")
-    public ResponseEntity<SuccessResponse> addReceipt(@Valid @RequestBody Receipt receipt, BindingResult bindingResult) throws Exception {
+    public SuccessResponse<Void> addReceipt(@Valid @RequestBody Receipt receipt, BindingResult bindingResult) throws Exception {
 
         if (bindingResult.hasErrors()) {
             throw new InvalidInputException("입력값을 확인해주세요.");
@@ -30,7 +30,7 @@ public class ReceiptController {
 
         receiptService.addReceipt(receipt);
 
-        return ResponseEntity.ok(new SuccessResponse());
+        return SuccessResponse.emptyResponse();
     }
 
     @GetMapping("/getReceipt")

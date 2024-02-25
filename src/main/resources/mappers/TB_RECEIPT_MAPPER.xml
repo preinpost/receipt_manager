@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="DB_RECEIPT">
+<mapper namespace="TB_RECEIPT">
     <select id="selectOne" resultType="soo.receipt_writer.domain.Receipt">
-        SELECT * FROM DB_RECEIPT;
+        SELECT * FROM TB_RECEIPT;
     </select>
 
     <select id="selectAll" resultType="soo.receipt_writer.domain.Receipt">
-        SELECT * FROM DB_RECEIPT;
+        SELECT * FROM TB_RECEIPT;
     </select>
 
     <insert id="insertOne" parameterType="soo.receipt_writer.domain.Receipt">
-        INSERT INTO DB_RECEIPT (
+        INSERT INTO TB_RECEIPT (
              PAYMENT_DATE
             ,PAYMENT_AMOUNT
             ,PAYMENT_LOCATION

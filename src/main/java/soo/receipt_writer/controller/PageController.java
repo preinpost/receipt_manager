@@ -19,9 +19,9 @@ public class PageController {
 
     private final ReceiptService receiptService;
 
-    @RequestMapping("/hello")
-    public String hello() {
-        return "hello";
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
     }
 
     @RequestMapping("/month-list")

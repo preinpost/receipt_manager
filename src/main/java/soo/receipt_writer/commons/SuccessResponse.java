@@ -1,21 +1,11 @@
 package soo.receipt_writer.commons;
 
-import lombok.Getter;
-
-import java.time.LocalDateTime;
-
-@Getter
-public class SuccessResponse {
-
-    private final String status = "success";
-    private final LocalDateTime timestamp = LocalDateTime.now();
-    private final Object data;
-
-    public SuccessResponse(Object data) {
-        this.data = data;
+public class SuccessResponse<T> extends CommonResponse<T> {
+    public SuccessResponse(T data) {
+        super("success", data);
     }
 
-    public SuccessResponse() {
-        this.data = "{}";
+    static public SuccessResponse<Void> emptyResponse() {
+        return new SuccessResponse<>(null);
     }
 }

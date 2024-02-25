@@ -14,14 +14,14 @@ public class ReceiptRepository {
     private final SqlSession session;
 
     public int insertOne(Receipt receipt) {
-        return session.insert("DB_RECEIPT.insertOne", receipt);
+        return session.insert("TB_RECEIPT.insertOne", receipt);
     }
 
     public Receipt selectOne() {
-        return session.selectOne("DB_RECEIPT.selectOne");
+        return session.selectOne("TB_RECEIPT.selectOne");
     }
 
     public List<Receipt> selectAll() {
-        return session.selectList("DB_RECEIPT.selectAll");
+        return session.selectList("TB_RECEIPT.selectAll");
     }
 }

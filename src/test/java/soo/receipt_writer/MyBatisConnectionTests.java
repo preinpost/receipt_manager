@@ -13,7 +13,7 @@ public class MyBatisConnectionTests {
 
     @Test
     public void testConnection() {
-        Object result = session.selectOne("DB_RECEIPT.selectOne");
+        Object result = session.selectOne("TB_RECEIPT.selectOne");
         System.out.println(result);
     }
 }
