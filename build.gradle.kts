@@ -63,11 +63,15 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+val nodeInstall = tasks.register<NpmTask>("nodeInstall") {
+    args.set(listOf("install"))
+}
 
 val tailwindBuild = tasks.register<NpmTask>("tailwindBuild") {
     args.set(listOf("run", "build"))
 }
 
 tasks.withType<JavaCompile> {
+    dependsOn(nodeInstall)
     dependsOn(tailwindBuild)
 }
