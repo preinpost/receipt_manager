@@ -31,7 +31,7 @@ CREATE TABLE TB_USER
     uid      varchar(36)   NOT NULL PRIMARY KEY ,
     user_id  varchar(30)   NOT NULL,
     password varchar(1000),
-    passkey  varchar(8000),
+    passkey  text,
     PRIMARY KEY (uid)
 );
 
