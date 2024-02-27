@@ -89,7 +89,7 @@ public class WebAuthnService {
 
         String passkeyBase64 = serializeAuthenticatorToBase64(authenticator);
 
-        log.debug("passkeyBase64 = {}", passkeyBase64);
+        log.debug("passkeyBase64.length() = {}", passkeyBase64.length());
 
         userRepository.insertOne(
                 User.addPasskeyUser(
