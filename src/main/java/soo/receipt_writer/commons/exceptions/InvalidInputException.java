@@ -1,4 +1,4 @@
-package soo.receipt_writer.exceptions;
+package soo.receipt_writer.commons.exceptions;
 
 public class InvalidInputException extends RuntimeException {
 

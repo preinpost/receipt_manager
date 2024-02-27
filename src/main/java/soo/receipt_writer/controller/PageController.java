@@ -24,6 +24,11 @@ public class PageController {
         return "login";
     }
 
+    @RequestMapping("/register")
+    public String register() {
+        return "register";
+    }
+
     @RequestMapping("/month-list")
     public String monthList(@Valid PageParams pageParams, BindingResult bindingResult, Model model) throws Exception {
 

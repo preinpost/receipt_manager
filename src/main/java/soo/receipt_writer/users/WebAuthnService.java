@@ -40,6 +40,12 @@ public class WebAuthnService {
 
     public PublicKey getChallenge(RegistrationInfo registerInfo) {
 
+        User existCheckUser = userRepository.selectOneById(registerInfo.getId());
+
+        if (existCheckUser != null) {
+            throw new RuntimeException("이미 등록된 사용자입니다.");
+        }
+
         UUID uuid = UuidCreator.getTimeOrderedEpoch();
 
         byte[] userBase64UrlEncoded = Base64UrlUtil.encode(uuid.toString().getBytes());
@@ -108,10 +114,7 @@ public class WebAuthnService {
             throw new RuntimeException("사용자가 없습니다.");
         }
 
-//        byte[] userBase64UrlEncoded = Base64UrlUtil.encode(userData.getUid().getBytes());
-
         PublicKeyCredentialRpEntity rp = new PublicKeyCredentialRpEntity(webAuthnProperty.getRp(), webAuthnProperty.getRpName());
-//        PublicKeyCredentialUserEntity user = new PublicKeyCredentialUserEntity(userBase64UrlEncoded, userData.getUserId(), userData.getUserId());
         DefaultChallenge challenge = new DefaultChallenge();
 
         Authenticator authenticator = base64ToAuthenticator(userData.getPasskey());
@@ -145,6 +148,6 @@ public class WebAuthnService {
 
         AuthenticationData response = webAuthnManager.validate(authenticationRequest, authenticationParameters);
 
-        log.debug("response = {}", response);
+        session.setAttribute("loginSession", new LoginSession(((WebauthnSession) session.getAttribute("webauthnSession")).getUserId()));
     }
 }

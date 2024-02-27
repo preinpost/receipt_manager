@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import soo.receipt_writer.exceptions.InvalidInputException;
+import soo.receipt_writer.commons.exceptions.InvalidInputException;
 
 @Slf4j
 @RestControllerAdvice

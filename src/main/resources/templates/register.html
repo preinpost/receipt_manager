@@ -7,8 +7,8 @@
       <label class="form-control w-full max-w-xs">
         <input id="id-input" type="text" placeholder="아이디를 입력해주세요" class="input input-bordered w-full max-w-xs" />
       </label>
-      <button id="get" class="btn btn-primary w-full max-w-xs">
-        로그인
+      <button id="create" class="btn btn-primary w-full max-w-xs">
+        회원가입
       </button>
     </div>
   </div>
@@ -16,11 +16,11 @@
 </html>
 
 <script>
-  const getBtn = document.getElementById('get');
+  const createBtn = document.getElementById('create');
 
-  getBtn.addEventListener('click', asyncGetFn);
+  createBtn.addEventListener('click', asyncFn);
 
-  async function asyncGetFn() {
+  async function asyncFn() {
 
     const id = document.querySelector("#id-input").value;
 
@@ -29,58 +29,55 @@
       return;
     }
 
-    // 1. rcr을 받아온다
-    const json = await (async () => {
-      const res = await fetch("/login/authentication_challenge?id=" + id, {
+    // 1. challenge를 받아온다
+    const getChallenge = await (async () => {
+      const res = await fetch("/login/register_challenge?id=" + id, {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Tydpe": "application/json",
         },
       })
 
       return res.json();
     })();
 
-    if (json.status === 'fail') {
-      alert("아이디가 존재하지 않습니다");
+    console.log("getChallenge = ", getChallenge);
+
+    if (getChallenge.status === 'fail') {
+      alert(getChallenge.message);
       return;
     }
 
-    const rcr = json.data;
+    const ccr = getChallenge.data.publicKey
 
     // challenge, id는 type 때문에 변환해줌
-    rcr.challenge = base64urlToUint8Array(rcr.challenge.value);
-    rcr.allowCredentials = rcr.allowCredentials.map((ac) => {
-      ac.id = base64urlToUint8Array(ac.id);
-      return ac;
-    })
-
-    console.log("rcr = ", rcr);
+    ccr.challenge = base64urlToUint8Array(ccr.challenge.value);
+    ccr.user.id = base64urlToUint8Array(ccr.user.id);
 
     // 브라우저는 ccr을 받아서 navigator.credentials.create 호출해서 option으로 ccr 넣어서 다시 서버로 요청
-    const credential = await navigator.credentials.get({
-      publicKey: removeNullKeysRecursive(rcr)
+    const credential = await navigator.credentials.create({
+      publicKey: removeNullKeysRecursive(ccr)
     });
 
-    console.log("credential = ", credential);
-
     const serializeable = {
-      credentialId: credential.id,
-      userHandle: bufferToBase64url(credential.response.userHandle),
-      authenticatorData: bufferToBase64url(credential.response.authenticatorData),
+      attestationObject: bufferToBase64url(credential.response.attestationObject),
       clientDataJSON: bufferToBase64url(credential.response.clientDataJSON),
-      signature: bufferToBase64url(credential.response.signature),
+      clientExtensions: JSON.stringify(credential.getClientExtensionResults()),
     };
 
-    console.log("serializeable = ", serializeable);
+    const registerResult = await (async () => {
+      const res = await fetch("/login/register_passkey", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(serializeable),
+      })
 
-    const res = await fetch("/login/authentication_passkey", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(serializeable),
-    })
+      return res.json();
+    })();
+
+    console.log("result = ", registerResult);
   }
 
   function bufferToBase64url(buffer) {
