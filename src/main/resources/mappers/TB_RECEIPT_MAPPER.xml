@@ -2,21 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="TB_RECEIPT">
     <select id="selectOne" resultType="soo.receipt_writer.receipt.repository.Receipt">
-        SELECT * FROM TB_RECEIPT;
+        SELECT *
+        FROM TB_RECEIPT
+        WHERE USER_ID = #{userId}
+        ;
     </select>
 
-    <select id="selectAll" resultType="soo.receipt_writer.receipt.repository.Receipt">
-        SELECT * FROM TB_RECEIPT;
+    <select id="getMaxSeq" parameterType="soo.receipt_writer.receipt.repository.Receipt" resultType="java.lang.String">
+        SELECT NVL(MAX(SEQ + 1), 0)
+        FROM TB_RECEIPT
+        WHERE USER_ID = #{userId}
+          AND RECEIPT_YEAR = #{receiptYear}
+          AND RECEIPT_DATE = #{receiptDate}
+          AND PAYMENT_DATE = #{paymentDate}
+        ;
+    </select>
+
+
+    <select id="selectAll" parameterType="java.lang.String" resultType="soo.receipt_writer.receipt.repository.Receipt">
+        SELECT *
+        FROM TB_RECEIPT
+        WHERE USER_ID = #{userId}
+        ;
     </select>
 
     <insert id="insertOne" parameterType="soo.receipt_writer.receipt.repository.Receipt">
         INSERT INTO TB_RECEIPT (
-             PAYMENT_DATE
+             USER_ID
+            ,RECEIPT_YEAR
+            ,RECEIPT_DATE
+            ,SEQ
+            ,PAYMENT_DATE
             ,PAYMENT_AMOUNT
             ,PAYMENT_LOCATION
         )
         VALUES (
-             #{paymentDate}
+             #{userId}
+            ,#{receiptYear}
+            ,#{receiptDate}
+            ,#{seq}
+            ,#{paymentDate}
             ,#{paymentAmount}
             ,#{paymentLocation}
         );

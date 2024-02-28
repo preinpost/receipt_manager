@@ -16,11 +16,15 @@ public class ReceiptRepository {
         return session.insert("TB_RECEIPT.insertOne", receipt);
     }
 
+    public String getMaxSeq(Receipt receipt) {
+        return session.selectOne("TB_RECEIPT.getMaxSeq", receipt);
+    }
+
     public Receipt selectOne() {
         return session.selectOne("TB_RECEIPT.selectOne");
     }
 
-    public List<Receipt> selectAll() {
-        return session.selectList("TB_RECEIPT.selectAll");
+    public List<Receipt> selectAll(String userId) {
+        return session.selectList("TB_RECEIPT.selectAll", userId);
     }
 }

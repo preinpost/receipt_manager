@@ -5,18 +5,25 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-@Slf4j
-@Getter @Setter
+@Getter @Setter @Builder
 @AllArgsConstructor
 public class Receipt {
+
+    private String userId;
+
+    private String receiptYear;
+
+    private String receiptDate;
+
+    private String seq;
 
     @NotEmpty @Size(min = 8, max = 8)
     private String paymentDate;

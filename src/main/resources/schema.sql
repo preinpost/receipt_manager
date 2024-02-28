@@ -1,10 +1,10 @@
 CREATE TABLE TB_RECEIPT
 (
-    user_id          varchar(36)   NOT NULL,
-    receipt_year     varchar(4)    NOT NULL,
-    receipt_date     varchar(4)    NOT NULL,
-    seq              varchar(1000) NOT NULL,
-    payment_date     varchar(8)    NOT NULL,
+    user_id          varchar(30)    NOT NULL,
+    receipt_year     varchar(4)     NOT NULL,
+    receipt_date     varchar(4)     NOT NULL,
+    seq              varchar(1000)  NOT NULL ,
+    payment_date     varchar(8)     NOT NULL,
     payment_amount   varchar(16)  ,
     payment_location varchar(200) ,
     PRIMARY KEY (user_id, receipt_year, receipt_date, seq)

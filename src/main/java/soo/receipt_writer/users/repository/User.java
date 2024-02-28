@@ -10,6 +10,7 @@ import lombok.Setter;
 public class User {
 
     private String uid;
+
     private String userId;
 
     @Nullable
