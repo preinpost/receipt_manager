@@ -5,10 +5,13 @@
   <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
     <div class="flex flex-col space-y-6">
       <label class="form-control w-full max-w-xs">
-        <input id="id-input" type="text" placeholder="아이디를 입력해주세요" class="input input-bordered w-full max-w-xs" />
+        <input id="id-input" type="text" placeholder="아이디를 입력해주세요" class="input input-bordered w-full max-w-xs"/>
       </label>
       <button id="get" class="btn btn-primary w-full max-w-xs">
         로그인
+      </button>
+      <button class="btn secondary w-full max-w-xs" onclick="location.replace('/register')">
+        회원가입
       </button>
     </div>
   </div>
@@ -74,13 +77,24 @@
 
     console.log("serializeable = ", serializeable);
 
-    const res = await fetch("/login/authentication_passkey", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(serializeable),
-    })
+    const loginResult = await (async () => {
+      const res = await fetch("/login/authentication_passkey", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(serializeable),
+      })
+
+      return res.json();
+    })();
+
+    if (loginResult.status === 'fail') {
+      alert(loginResult.message);
+      return;
+    }
+
+    location.replace("/month-list");
   }
 
   function bufferToBase64url(buffer) {

@@ -6,7 +6,10 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/jsCalendar.min.css}">
 <body>
   <div class="container mx-auto">
-    <div class="text-lg m-10" th:text="${year + '년 ' + month + '월'}"></div>
+    <div class="text-lg m-10">
+      <div th:text="${session.loginSession.getUserId() + '님의'}"></div>
+      <div th:text="${year + '년 ' + month + '월' + '내역 입니다.'}"></div>
+    </div>
     <div class="flex flex-col container p-6 justify-center items-center">
       <div class="flex justify-end w-full" onclick="my_modal_1.showModal()">
         <div class="cursor-pointer">
@@ -90,7 +93,7 @@
   }
 
   function plainNumberToCommaNumber(number) {
-    return  new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'WON' }).format(
+    return new Intl.NumberFormat('ko-KR', {style: 'currency', currency: 'WON'}).format(
       number,
     )
   }
@@ -127,7 +130,7 @@
     const inputEl = document.querySelectorAll('#my_modal_1 .card-body input');
 
     _.map(inputEl, (el) => {
-      req[el.name] = el.value.replace(/\./g,"");
+      req[el.name] = el.value.replace(/\./g, "");
     });
 
     console.log(req)
