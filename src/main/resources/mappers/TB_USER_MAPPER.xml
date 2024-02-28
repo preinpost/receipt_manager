@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="TB_USER">
-    <select id="selectOneById" parameterType="String" resultType="soo.receipt_writer.domain.User">
+    <select id="selectOneById" parameterType="String" resultType="soo.receipt_writer.users.repository.User">
         SELECT * FROM TB_USER
             WHERE user_id= #{id}
         ;
     </select>
 
-    <select id="selectAll" resultType="soo.receipt_writer.domain.User">
+    <select id="selectAll" resultType="soo.receipt_writer.users.repository.User">
         SELECT * FROM TB_USER;
     </select>
 
-    <insert id="insertOne" parameterType="soo.receipt_writer.domain.User">
+    <insert id="insertOne" parameterType="soo.receipt_writer.users.repository.User">
         INSERT INTO TB_USER (
              uid
             ,user_id

@@ -3,7 +3,8 @@ package soo.receipt_writer.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import soo.receipt_writer.domain.Receipt;
+import soo.receipt_writer.receipt.repository.Receipt;
+import soo.receipt_writer.receipt.service.ReceiptService;
 
 @SpringBootTest
 class ReceiptServiceTest {

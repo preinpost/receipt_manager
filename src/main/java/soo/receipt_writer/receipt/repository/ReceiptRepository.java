@@ -1,9 +1,8 @@
-package soo.receipt_writer.repository;
+package soo.receipt_writer.receipt.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
-import soo.receipt_writer.domain.Receipt;
 
 import java.util.List;
 

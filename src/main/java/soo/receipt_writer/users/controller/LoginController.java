@@ -1,4 +1,4 @@
-package soo.receipt_writer.users;
+package soo.receipt_writer.users.controller;
 
 import com.webauthn4j.data.PublicKeyCredentialRequestOptions;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +9,7 @@ import soo.receipt_writer.users.dto.authentication.AuthenticationResponseJson;
 import soo.receipt_writer.users.dto.registration.PublicKey;
 import soo.receipt_writer.users.dto.registration.RegistrationInfo;
 import soo.receipt_writer.users.dto.registration.RegistrationResponseJSON;
+import soo.receipt_writer.users.service.WebAuthnService;
 
 @RestController
 @RequiredArgsConstructor

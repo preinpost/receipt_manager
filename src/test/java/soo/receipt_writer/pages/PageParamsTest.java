@@ -1,10 +1,8 @@
-package soo.receipt_writer.controller;
+package soo.receipt_writer.pages;
 
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class PageParamsTest {
 

@@ -1,4 +1,4 @@
-package soo.receipt_writer.controller;
+package soo.receipt_writer.pages;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
-import soo.receipt_writer.domain.Receipt;
-import soo.receipt_writer.service.ReceiptService;
+import soo.receipt_writer.receipt.repository.Receipt;
+import soo.receipt_writer.receipt.service.ReceiptService;
 
 import java.util.List;
 

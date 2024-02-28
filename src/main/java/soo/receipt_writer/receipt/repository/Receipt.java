@@ -1,4 +1,4 @@
-package soo.receipt_writer.domain;
+package soo.receipt_writer.receipt.repository;
 
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;

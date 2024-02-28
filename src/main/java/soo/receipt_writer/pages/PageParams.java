@@ -1,4 +1,4 @@
-package soo.receipt_writer.controller;
+package soo.receipt_writer.pages;
 
 import org.springframework.lang.Nullable;
 

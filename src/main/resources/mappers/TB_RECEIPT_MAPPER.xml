@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="TB_RECEIPT">
-    <select id="selectOne" resultType="soo.receipt_writer.domain.Receipt">
+    <select id="selectOne" resultType="soo.receipt_writer.receipt.repository.Receipt">
         SELECT * FROM TB_RECEIPT;
     </select>
 
-    <select id="selectAll" resultType="soo.receipt_writer.domain.Receipt">
+    <select id="selectAll" resultType="soo.receipt_writer.receipt.repository.Receipt">
         SELECT * FROM TB_RECEIPT;
     </select>
 
-    <insert id="insertOne" parameterType="soo.receipt_writer.domain.Receipt">
+    <insert id="insertOne" parameterType="soo.receipt_writer.receipt.repository.Receipt">
         INSERT INTO TB_RECEIPT (
              PAYMENT_DATE
             ,PAYMENT_AMOUNT

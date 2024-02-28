@@ -1,10 +1,10 @@
-package soo.receipt_writer.service;
+package soo.receipt_writer.receipt.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import soo.receipt_writer.domain.Receipt;
-import soo.receipt_writer.repository.ReceiptRepository;
+import soo.receipt_writer.receipt.repository.Receipt;
+import soo.receipt_writer.receipt.repository.ReceiptRepository;
 
 import java.util.List;
 

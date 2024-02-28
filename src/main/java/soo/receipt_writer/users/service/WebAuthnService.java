@@ -1,4 +1,4 @@
-package soo.receipt_writer.users;
+package soo.receipt_writer.users.service;
 
 import com.github.f4b6a3.uuid.UuidCreator;
 import com.webauthn4j.WebAuthnManager;
@@ -15,8 +15,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-import soo.receipt_writer.domain.User;
-import soo.receipt_writer.repository.UserRepository;
+import soo.receipt_writer.users.repository.User;
+import soo.receipt_writer.users.LoginSession;
+import soo.receipt_writer.users.repository.UserRepository;
+import soo.receipt_writer.users.WebAuthnProperty;
+import soo.receipt_writer.users.WebauthnSession;
 import soo.receipt_writer.users.dto.authentication.AuthenticationInfo;
 import soo.receipt_writer.users.dto.authentication.AuthenticationResponseJson;
 import soo.receipt_writer.users.dto.registration.PublicKey;
@@ -107,7 +110,6 @@ public class WebAuthnService {
     }
 
     public PublicKeyCredentialRequestOptions getAuthenticationChallenge(AuthenticationInfo info) {
-        System.out.println("WebAuthnService.getAuthenticationChallenge");
         User userData = userRepository.selectOneById(info.getId());
 
         if(userData == null) {

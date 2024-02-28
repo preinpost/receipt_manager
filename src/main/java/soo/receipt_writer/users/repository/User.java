@@ -1,4 +1,4 @@
-package soo.receipt_writer.domain;
+package soo.receipt_writer.users.repository;
 
 import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
