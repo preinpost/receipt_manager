@@ -38,4 +38,4 @@ out/
 
 ### Front ###
 node_modules
-**/static/**/*.css
+**/static/**/main.css
