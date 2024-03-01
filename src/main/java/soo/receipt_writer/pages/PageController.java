@@ -1,5 +1,6 @@
 package soo.receipt_writer.pages;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import soo.receipt_writer.receipt.repository.Receipt;
 import soo.receipt_writer.receipt.service.ReceiptService;
 
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -18,6 +20,11 @@ import java.util.List;
 public class PageController {
 
     private final ReceiptService receiptService;
+
+    @RequestMapping("/")
+    public void index(HttpServletResponse response) throws IOException {
+        response.sendRedirect("month-list");
+    }
 
     @RequestMapping("/login")
     public String login() {
