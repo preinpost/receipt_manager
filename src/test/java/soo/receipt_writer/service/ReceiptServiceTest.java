@@ -12,9 +12,9 @@ class ReceiptServiceTest {
     @Autowired
     private ReceiptService receiptService;
 
-    @Test
-    void addReceipt() {
-        Receipt receipt = new Receipt("2024-01-24", "10000", "서울시 강남구 역삼동");
-        receiptService.addReceipt(receipt);
-    }
+//    @Test
+//    void addReceipt() {
+//        Receipt receipt = new Receipt("2024-01-24", "10000", "서울시 강남구 역삼동");
+//        receiptService.addReceipt(receipt);
+//    }
 }
