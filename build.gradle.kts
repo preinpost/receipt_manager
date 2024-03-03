@@ -73,10 +73,11 @@ val tailwindBuild = tasks.register<NpmTask>("tailwindBuild") {
 
 val mergeSql = tasks.register("mergeSql") {
     file("src/main/resources/schema.sql").delete()
+    file("src/main/resources/schema.sql").appendText("--THIS IS AUTO GENERATED FILE\n--DO NOT EDIT\n\n")
 
     doLast {
         fileTree("db").forEach {
-            val sql = it.readText()
+            val sql = it.readText().replace("\n", "")
             file("src/main/resources/schema.sql").appendText(sql)
         }
     }

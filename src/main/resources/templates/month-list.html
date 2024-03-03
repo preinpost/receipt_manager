@@ -133,8 +133,6 @@
       req[el.name] = el.value.replace(/\./g, "");
     });
 
-    console.log(req)
-
     fetch('/addReceipt', {
       method: 'POST',
       headers: {
