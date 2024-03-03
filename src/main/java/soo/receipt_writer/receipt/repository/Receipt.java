@@ -23,7 +23,7 @@ public class Receipt {
 
     private String receiptDate;
 
-    private String seq;
+    private Long seq;
 
     @NotEmpty @Size(min = 8, max = 8)
     private String paymentDate;

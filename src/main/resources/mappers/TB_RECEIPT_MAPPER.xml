@@ -8,8 +8,8 @@
         ;
     </select>
 
-    <select id="getMaxSeq" parameterType="soo.receipt_writer.receipt.repository.Receipt" resultType="java.lang.String">
-        SELECT NVL(MAX(SEQ + 1), 0)
+    <select id="getMaxSeq" parameterType="soo.receipt_writer.receipt.repository.Receipt" resultType="long">
+        SELECT COALESCE(MAX(SEQ + 1), 0)
         FROM TB_RECEIPT
         WHERE USER_ID = #{userId}
           AND RECEIPT_YEAR = #{receiptYear}

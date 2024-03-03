@@ -39,3 +39,6 @@ out/
 ### Front ###
 node_modules
 **/static/**/main.css
+
+### Generated ###
+src/main/resources/schema.sql

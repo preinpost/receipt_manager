@@ -71,7 +71,22 @@ val tailwindBuild = tasks.register<NpmTask>("tailwindBuild") {
     args.set(listOf("run", "build"))
 }
 
+val mergeSql = tasks.register("mergeSql") {
+    file("src/main/resources/schema.sql").delete()
+
+    doLast {
+        fileTree("db").forEach {
+            val sql = it.readText()
+            file("src/main/resources/schema.sql").appendText(sql)
+        }
+    }
+}
+
 tasks.withType<JavaCompile> {
     dependsOn(nodeInstall)
     dependsOn(tailwindBuild)
+}
+
+tasks.withType<ProcessResources> {
+    dependsOn(mergeSql)
 }

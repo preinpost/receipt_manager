@@ -19,7 +19,7 @@ public class ReceiptService {
 
     public int addReceipt(Receipt receipt) {
 
-        String maxSeq = receiptRepository.getMaxSeq(receipt);
+        long maxSeq = receiptRepository.getMaxSeq(receipt);
         receipt.setSeq(maxSeq);
 
         int result = receiptRepository.insertOne(receipt);
