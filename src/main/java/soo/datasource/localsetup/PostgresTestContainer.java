@@ -1,4 +1,4 @@
-package soo.localsetup;
+package soo.datasource.localsetup;
 
 import com.github.dockerjava.api.model.PortBinding;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package soo.localsetup;
+package soo.datasource.localsetup;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
