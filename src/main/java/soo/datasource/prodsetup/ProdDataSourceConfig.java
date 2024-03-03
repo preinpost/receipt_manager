@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
 @RequiredArgsConstructor
+@Configuration
 @EnableConfigurationProperties(ProdDataSource.class)
 public class ProdDataSourceConfig {
 
@@ -18,8 +20,8 @@ public class ProdDataSourceConfig {
         return DataSourceBuilder.create()
                 .url(prodDataSource.getUrl())
                 .driverClassName(prodDataSource.getDriverClassName())
-                .username(prodDataSource.getRECEIPT_USER())
-                .password(prodDataSource.getRECEIPT_PASSWORD())
+                .username(prodDataSource.getUser())
+                .password(prodDataSource.getPassword())
                 .build();
     }
 }
