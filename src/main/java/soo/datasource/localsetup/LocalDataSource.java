@@ -10,7 +10,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 
 import javax.sql.DataSource;
 
-@Profile(value = {"test", "local", "dev"})
+@Profile(value = {"local", "dev"})
 @Slf4j
 @Configuration
 @RequiredArgsConstructor

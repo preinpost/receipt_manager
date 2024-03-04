@@ -1,4 +1,4 @@
-package soo.receipt_writer.receipt.dto;
+package soo.receipt_writer.receipt.controller.io;
 
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;

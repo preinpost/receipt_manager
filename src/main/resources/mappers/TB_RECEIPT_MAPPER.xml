@@ -18,11 +18,11 @@
         ;
     </select>
 
-
     <select id="selectAll" parameterType="java.lang.String" resultType="soo.receipt_writer.receipt.repository.Receipt">
         SELECT *
         FROM TB_RECEIPT
         WHERE USER_ID = #{userId}
+          AND DEL_YN = 'N'
         ;
     </select>
 
@@ -46,4 +46,12 @@
             ,#{paymentLocation}
         );
     </insert>
+
+    <update id="removeReceipt" parameterType="soo.receipt_writer.receipt.repository.dto.ReceiptRemoveDTO">
+        UPDATE TB_RECEIPT
+        SET del_yn = 'Y'
+        WHERE user_id       = #{userId}
+          AND seq           = #{seq}
+          AND payment_date  = #{paymentDate}
+    </update>
 </mapper>

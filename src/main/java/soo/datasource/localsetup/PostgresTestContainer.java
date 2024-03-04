@@ -9,7 +9,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import java.util.Objects;
 import java.util.Optional;
 
-@Profile(value = {"test", "local", "dev"})
+@Profile(value = {"local", "dev"})
 @Configuration
 public class PostgresTestContainer {
 

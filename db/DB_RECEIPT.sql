@@ -5,8 +5,9 @@ CREATE TABLE TB_RECEIPT
     receipt_date     varchar(4)     NOT NULL,
     seq              numeric        NOT NULL,
     payment_date     varchar(8)     NOT NULL,
-    payment_amount   varchar(16)  ,
-    payment_location varchar(200) ,
+    payment_amount   varchar(16)            ,
+    payment_location varchar(200)           ,
+    del_yn           char(1)     DEFAULT 'N',
     PRIMARY KEY (user_id, receipt_year, receipt_date, seq)
 );
 

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import soo.receipt_writer.commons.config.LoginUtils;
 import soo.receipt_writer.commons.exceptions.InvalidInputException;
+import soo.receipt_writer.receipt.repository.dto.ReceiptRemoveDTO;
 import soo.receipt_writer.receipt.repository.Receipt;
 import soo.receipt_writer.receipt.repository.ReceiptRepository;
 
@@ -32,8 +33,10 @@ public class ReceiptService {
     }
 
     public List<Receipt> selectAll() {
-        String userId = LoginUtils.loginSession().getUserId();
-        log.debug("userId = {}", userId);
         return receiptRepository.selectAll(LoginUtils.loginSession().getUserId());
+    }
+
+    public int removeReceipt(ReceiptRemoveDTO removeDTO) {
+        return receiptRepository.removeReceipt(removeDTO);
     }
 }

@@ -2,8 +2,10 @@ package soo.datasource.prodsetup;
 
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Profile;
 
 @Getter
+@Profile("prod")
 @ConfigurationProperties(prefix = "receipt")
 public class ProdDataSource {
 
