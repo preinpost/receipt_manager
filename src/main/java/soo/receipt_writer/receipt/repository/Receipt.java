@@ -34,14 +34,4 @@ public class Receipt {
     @NotEmpty @Size(max = 20)
     private String paymentLocation;
 
-    public String getPaymentDateWithFormat() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
-        LocalDate dateTime = LocalDate.parse(this.paymentDate, DateTimeFormatter.BASIC_ISO_DATE);
-        return formatter.format(dateTime);
-    }
-
-    public String getPaymentAmountWithComma() {
-        NumberFormat numberFormat = NumberFormat.getInstance();
-        return numberFormat.format(Long.parseLong(this.paymentAmount));
-    }
 }

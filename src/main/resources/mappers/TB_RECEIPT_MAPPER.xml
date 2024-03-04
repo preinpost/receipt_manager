@@ -18,8 +18,13 @@
         ;
     </select>
 
-    <select id="selectAll" parameterType="java.lang.String" resultType="soo.receipt_writer.receipt.repository.Receipt">
-        SELECT *
+    <select id="selectAll" parameterType="String" resultType="soo.receipt_writer.receipt.repository.dto.ReceiptSelectAllDTO">
+        SELECT receipt_year
+              ,receipt_date
+              ,seq
+              ,payment_date
+              ,payment_amount
+              ,payment_location
         FROM TB_RECEIPT
         WHERE USER_ID = #{userId}
           AND DEL_YN = 'N'

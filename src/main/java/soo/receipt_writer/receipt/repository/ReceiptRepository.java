@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 import soo.receipt_writer.receipt.repository.dto.ReceiptRemoveDTO;
+import soo.receipt_writer.receipt.repository.dto.ReceiptSelectAllDTO;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class ReceiptRepository {
         return session.selectOne("TB_RECEIPT.selectOne");
     }
 
-    public List<Receipt> selectAll(String userId) {
+    public List<ReceiptSelectAllDTO> selectAll(String userId) {
         return session.selectList("TB_RECEIPT.selectAll", userId);
     }
 

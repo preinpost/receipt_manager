@@ -8,6 +8,7 @@ import soo.receipt_writer.commons.exceptions.InvalidInputException;
 import soo.receipt_writer.receipt.repository.dto.ReceiptRemoveDTO;
 import soo.receipt_writer.receipt.repository.Receipt;
 import soo.receipt_writer.receipt.repository.ReceiptRepository;
+import soo.receipt_writer.receipt.repository.dto.ReceiptSelectAllDTO;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class ReceiptService {
         return result;
     }
 
-    public List<Receipt> selectAll() {
+    public List<ReceiptSelectAllDTO> selectAll() {
         return receiptRepository.selectAll(LoginUtils.loginSession().getUserId());
     }
 

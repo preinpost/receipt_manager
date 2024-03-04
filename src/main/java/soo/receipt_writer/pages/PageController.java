@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import soo.receipt_writer.receipt.repository.Receipt;
+import soo.receipt_writer.receipt.repository.dto.ReceiptSelectAllDTO;
 import soo.receipt_writer.receipt.service.ReceiptService;
 
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class PageController {
         }
         log.debug("pageable = {}", pageParams);
 
-        List<Receipt> receiptList = receiptService.selectAll();
+        List<ReceiptSelectAllDTO> receiptList = receiptService.selectAll();
 
         log.debug("receiptList = {}", receiptList);
 

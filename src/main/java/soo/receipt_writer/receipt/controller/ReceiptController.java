@@ -15,6 +15,7 @@ import soo.receipt_writer.receipt.controller.io.ReceiptRequest;
 import soo.receipt_writer.receipt.repository.Receipt;
 import soo.receipt_writer.commons.exceptions.InvalidInputException;
 import soo.receipt_writer.receipt.repository.dto.ReceiptRemoveDTO;
+import soo.receipt_writer.receipt.repository.dto.ReceiptSelectAllDTO;
 import soo.receipt_writer.receipt.service.ReceiptService;
 import soo.receipt_writer.users.LoginSession;
 
@@ -49,8 +50,8 @@ public class ReceiptController {
     }
 
     @GetMapping("/getReceipt")
-    public List<Receipt> getAllReceipt(HttpServletRequest httpRequest) {
-        return receiptService.selectAll();
+    public SuccessResponse<List<ReceiptSelectAllDTO>> getAllReceipt() {
+        return new SuccessResponse<>(receiptService.selectAll());
     }
 
     @PostMapping("/removeReceipt")
