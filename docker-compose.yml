@@ -1,14 +1,9 @@
 version: '3'
 services:
-    receipt-service-prod:
-      image: ghcr.io/preinpost/recepit:latest
-      container_name: receipt-service-prod
-      ports:
-        - "58080:8080"
-      networks:
-      - receipt-network
-      restart: unless-stopped
-
-networks:
-  receipt-network:
-    driver: host
+  receipt-service-prod:
+    image: ghcr.io/preinpost/recepit:latest
+    container_name: receipt-service-prod
+    ports:
+      - "58080:8080"
+    network_mode: "host"
+    restart: unless-stopped

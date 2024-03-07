@@ -20,5 +20,7 @@ EXPOSE 8080
 
 ENV SPRING_PROFILES_ACTIVE="prod"
 
+
+RUN useradd ms
 USER ms
 CMD ["java", "-jar", "receipt_writer-0.0.1-SNAPSHOT.jar"]
