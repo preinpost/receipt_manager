@@ -25,4 +25,7 @@ jobs:
       - name: Build with Gradle
         env:
           CR_PAT: ${{ secrets.CR_PAT }}
+          RECEIPT_USER: ${{ secrets.RECEIPT_USER }}
+          RECEIPT_PASSWORD: ${{ secrets.RECEIPT_PASSWORD }}
+
         run: sh ./docker_build.sh
