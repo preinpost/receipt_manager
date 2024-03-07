@@ -1,19 +1,20 @@
 import com.github.gradle.node.npm.task.NpmTask
-import org.springframework.boot.gradle.tasks.run.BootRun
 
 plugins {
     java
     id("org.springframework.boot") version "3.2.2"
     id("io.spring.dependency-management") version "1.1.4"
-    id("com.github.node-gradle.node") version "3.4.0"
+    id("com.github.node-gradle.node") version "7.0.2"
 }
 
 group = "soo"
 version = "0.0.1-SNAPSHOT"
 
 node {
-    version = "16.13.2"
-    npmVersion = "9.6.5"
+    download = true
+    version = "18.17.1"
+    npmVersion = ""
+    distBaseUrl = "https://nodejs.org/dist"
 
     val projectDir = file("${project.projectDir}/src/main/tailwindcss")
     nodeProjectDir.set(projectDir)

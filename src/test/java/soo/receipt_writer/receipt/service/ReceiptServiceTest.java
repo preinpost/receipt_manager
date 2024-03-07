@@ -122,6 +122,4 @@ class ReceiptServiceTest {
         // then
         assertThat(row).isEqualTo(1);
     }
-
-
 }
