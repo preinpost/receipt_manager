@@ -1,9 +1,9 @@
 #!/bin/zsh
 
 # Build the docker image
-podman build -t ghcr.io/preinpost/recepit .
+podman build --build-arg RECEIPT_USER=$RECEIPT_USER --build-arg RECEIPT_PASSWORD=$RECEIPT_PASSWORD -t ghcr.io/preinpost/recepit .
 
-## Log in to the GitHub Container Registry
+# Log in to the GitHub Container Registry
 echo $CR_PAT | podman login ghcr.io -u preinpost --password-stdin
 #
 ## Push the docker image to the GitHub Container Registry

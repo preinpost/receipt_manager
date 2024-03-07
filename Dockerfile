@@ -1,12 +1,7 @@
 FROM gradle:jdk17-jammy as builder
 WORKDIR /build
 
-COPY build.gradle.kts settings.gradle.kts /build/
-RUN gradle build -x test --parallel --continue > /dev/null 2>&1 || true
-
 COPY . /build
-
-ENTRYPOINT ["tail", "-f", "/dev/null"]
 
 RUN gradle build -x test --parallel
 
@@ -18,8 +13,13 @@ COPY --from=builder /build/build/libs/receipt_writer-0.0.1-SNAPSHOT.jar .
 
 EXPOSE 8080
 
-ENV SPRING_PROFILES_ACTIVE="prod"
+ARG RECEIPT_USER
+ARG RECEIPT_PASSWORD
 
+ENV RECEIPT_USER=${RECEIPT_USER}
+ENV RECEIPT_PASSWORD=${RECEIPT_PASSWORD}
+
+ENV SPRING_PROFILES_ACTIVE="prod"
 
 RUN useradd ms
 USER ms
