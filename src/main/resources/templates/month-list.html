@@ -46,19 +46,20 @@
 
             <input id="date-field" data-format="date" type="text" name="paymentDate" placeholder="Type here"
                    class="input input-bordered input-info w-full"
-                   onclick="toggleCalendar()" readonly/>
+                   onfocusin="openCalendar()" readonly/>
           </label>
+          <div id="add-calendar" class="flex w-[300px] justify-center items-center hidden"></div>
 
           <label class="form-control w-full text-black">
             <div class="label"><span class="label-text">금액</span></div>
             <input type="text" data-format="currency" name="paymentAmount" placeholder="Type here"
-                   class="input input-bordered input-info w-full"/>
+                   class="input input-bordered input-info w-full" onfocus="closeCalendar()"/>
           </label>
 
           <label class="form-control w-full text-black">
             <div class="label"><span class="label-text">사용처</span></div>
             <input type="text" name="paymentLocation" placeholder="Type here"
-                   class="input input-bordered input-info w-full"/>
+                   class="input input-bordered input-info w-full" onfocus="closeCalendar()"/>
           </label>
         </div>
       </div>
@@ -69,13 +70,14 @@
           <button class="btn bg-red-400">닫기</button>
         </form>
       </div>
-      <div id="add-calendar"
-           class="absolute flex w-full h-full justify-center items-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden"></div>
     </div>
   </dialog>
+  <diglog th:replace="~{common/base :: alert-modal}"></diglog>
 </body>
 </html>
 <script defer>
+
+  const modelElement = document.getElementById("my_modal_1");
   const calendarElement = document.getElementById("add-calendar");
   const dateField = document.getElementById("date-field");
 
@@ -89,13 +91,26 @@
     dateField.value = formatDateWithDot(date);
     myCalendar.clearselect();
     myCalendar.select([date]);
-    toggleCalendar();
+    closeCalendar();
   });
 
-  // 캘린더 show/hidden toggle 함수
-  function toggleCalendar() {
-    calendarElement.classList.toggle("hidden");
+  function openCalendar() {
+    calendarElement.classList.remove("hidden");
   }
+
+  function closeCalendar() {
+    myCalendar.clearselect();
+    calendarElement.classList.add("hidden");
+  }
+
+  modelElement.addEventListener("close", () => {
+    // input 초기화
+    const inputEl = document.querySelectorAll('#my_modal_1 .card-body input');
+    _.map(inputEl, (el) => {
+      el.value = "";
+    });
+    closeCalendar();
+  });
 
   function plainNumberToCommaNumber(number) {
     return new Intl.NumberFormat('ko-KR', {style: 'currency', currency: 'WON'}).format(
@@ -166,31 +181,38 @@
   })
 
   function removeReceipt(self) {
-    const params = {
-      seq: self.getAttribute('data-seq'),
-      paymentDate: self.getAttribute('data-paymentdate')
-    }
+    document.getElementById('alert-modal').showModal();
+    document.getElementById('alert-message').innerText = '삭제하시겠습니까?';
+    document.getElementById('alert-ok').addEventListener('click', () => {
 
-    fetch('/removeReceipt', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(params),
-    })
-      .then(response => response.json()) // 응답을 JSON으로 파싱
-      .then(data => {
+      const params = {
+        seq: self.getAttribute('data-seq'),
+        paymentDate: self.getAttribute('data-paymentdate')
+      }
 
-        console.log("data = ", data);
-
-        if (data.status === 'fail') {
-          alert(data.message);
-          return;
-        }
-
-        location.reload();
+      fetch('/removeReceipt', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params),
       })
-      .catch((error) => console.error('Error:', error)); // 에러 처리
+        .then(response => response.json()) // 응답을 JSON으로 파싱
+        .then(data => {
+
+          console.log("data = ", data);
+
+          if (data.status === 'fail') {
+            alert(data.message);
+            return;
+          }
+
+          location.reload();
+        })
+        .catch((error) => console.error('Error:', error)); // 에러 처리
+
+      document.getElementById('alert-modal').close();
+    });
   }
 
 </script>

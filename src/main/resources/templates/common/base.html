@@ -10,6 +10,17 @@
   <script type="text/javascript" th:src="@{/js/underscore-umd-min.js}"></script>
 </head>
 <body>
-
+  <dialog id="alert-modal" class="modal" th:fragment="alert-modal">
+    <div class="modal-box">
+      <h3 class="font-bold text-lg">메세지</h3>
+      <p id="alert-message" class="py-4"></p>
+      <div class="modal-action">
+        <form method="dialog">
+          <button id="alert-cancel" class="btn btn-error">취소</button>
+        </form>
+        <button id="alert-ok" class="btn btn-info">확인</button>
+      </div>
+    </div>
+  </dialog>
 </body>
 </html>
