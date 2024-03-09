@@ -2,7 +2,7 @@ name: Gradle Docker Package
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
   build:
@@ -29,3 +29,14 @@ jobs:
           RECEIPT_PASSWORD: ${{ secrets.RECEIPT_PASSWORD }}
 
         run: sh ./docker_build.sh
+
+      - name: Podman Restart
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USERNAME }}
+          key: ${{ secrets.REMOTE_KEY }}
+          port: ${{ secrets.REMOTE_PORT }}
+          script: |
+            cd dev/project/receipt_manager
+            podman-compose up --force-recreate --build -d
