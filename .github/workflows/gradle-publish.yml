@@ -39,5 +39,4 @@ jobs:
           port: ${{ secrets.REMOTE_PORT }}
           script: |
             cd dev/project/receipt_manager
-            podman-compose down
-            podman-compose up --force-recreate --build -d
+            podman-compose down && podman-compose pull && podman-compose up -d

@@ -58,14 +58,12 @@
       return ac;
     })
 
-    console.log("rcr = ", rcr);
 
     // 브라우저는 ccr을 받아서 navigator.credentials.create 호출해서 option으로 ccr 넣어서 다시 서버로 요청
     const credential = await navigator.credentials.get({
       publicKey: removeNullKeysRecursive(rcr)
     });
 
-    console.log("credential = ", credential);
 
     const serializeable = {
       credentialId: credential.id,
@@ -75,7 +73,6 @@
       signature: bufferToBase64url(credential.response.signature),
     };
 
-    console.log("serializeable = ", serializeable);
 
     const loginResult = await (async () => {
       const res = await fetch("/login/authentication_passkey", {

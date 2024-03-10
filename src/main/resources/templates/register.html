@@ -41,8 +41,6 @@
       return res.json();
     })();
 
-    console.log("getChallenge = ", getChallenge);
-
     if (getChallenge.status === 'fail') {
       alert(getChallenge.message);
       return;
