@@ -17,7 +17,7 @@ public class ReceiptRepository {
         return session.insert("TB_RECEIPT.insertOne", receipt);
     }
 
-    public long getMaxSeq(GetMaxSeqDAO dao) {
+    public long getMaxSeq(GetMaxSeqParams dao) {
         return session.selectOne("TB_RECEIPT.getMaxSeq", dao);
     }
 
