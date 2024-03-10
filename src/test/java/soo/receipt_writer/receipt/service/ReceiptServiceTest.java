@@ -1,6 +1,5 @@
 package soo.receipt_writer.receipt.service;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,9 +8,8 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import soo.receipt_writer.commons.config.LoginUtils;
-import soo.receipt_writer.receipt.repository.Receipt;
-import soo.receipt_writer.receipt.repository.dto.ReceiptRemoveDTO;
+import soo.receipt_writer.receipt.controller.io.ReceiptRemoveRequest;
+import soo.receipt_writer.receipt.controller.io.ReceiptRequest;
 import soo.receipt_writer.users.LoginSession;
 import soo.receipt_writer.users.repository.User;
 import soo.receipt_writer.users.repository.UserRepository;
@@ -34,17 +32,17 @@ class ReceiptServiceTest {
         User user = new User("asdas", "soo", "asd", "asd");
         userRepository.insertOne(user);
 
-        Receipt receipt = Receipt.builder()
-                .userId(user.getUserId())
-                .receiptYear("2021")
-                .receiptDate("0101")
-                .paymentDate("20210101")
-                .paymentAmount("10000")
-                .paymentLocation("홈플러스")
-                .build();
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute("loginSession", new LoginSession(user.getUserId()));
+        request.setSession(session);
+
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        ReceiptRequest insertOne = new ReceiptRequest("20210101", "10000", "홈플러스");
 
         // when
-        int row = receiptService.addReceipt(receipt);
+        int row = receiptService.addReceipt(insertOne);
 
         // then
         assertThat(row).isEqualTo(1);
@@ -63,16 +61,8 @@ class ReceiptServiceTest {
 
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
-        Receipt receipt = Receipt.builder()
-                .userId(user.getUserId())
-                .receiptYear("2021")
-                .receiptDate("0101")
-                .paymentDate("20210101")
-                .paymentAmount("10000")
-                .paymentLocation("홈플러스")
-                .build();
-
-        receiptService.addReceipt(receipt);
+        ReceiptRequest insertOne = new ReceiptRequest("20210101", "10000", "홈플러스");
+        receiptService.addReceipt(insertOne);
 
         // when
         int row = receiptService.selectAll().size();
@@ -92,32 +82,15 @@ class ReceiptServiceTest {
         session.setAttribute("loginSession", new LoginSession(user.getUserId()));
         request.setSession(session);
 
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
         String paymentDate = "20210101";
 
-        Receipt receipt = Receipt.builder()
-                .userId(user.getUserId())
-                .receiptYear("2021")
-                .receiptDate("0101")
-                .paymentDate(paymentDate)
-                .paymentAmount("10000")
-                .paymentLocation("홈플러스")
-                .build();
-
-        receiptService.addReceipt(receipt);
-
-        Receipt receipt2 = Receipt.builder()
-                .userId(user.getUserId())
-                .receiptYear("2021")
-                .receiptDate("0101")
-                .paymentDate(paymentDate)
-                .paymentAmount("10000")
-                .paymentLocation("홈플러스")
-                .build();
-
-        receiptService.addReceipt(receipt2);
+        ReceiptRequest insertOne = new ReceiptRequest("20210101", "10000", "홈플러스");
+        receiptService.addReceipt(insertOne);
 
         // when
-        int row = receiptService.removeReceipt(new ReceiptRemoveDTO(user.getUserId(), 0, paymentDate));
+        int row = receiptService.removeReceipt(new ReceiptRemoveRequest(0, paymentDate));
 
         // then
         assertThat(row).isEqualTo(1);

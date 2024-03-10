@@ -5,10 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import soo.receipt_writer.commons.config.LoginUtils;
 import soo.receipt_writer.commons.exceptions.InvalidInputException;
-import soo.receipt_writer.receipt.repository.dto.ReceiptRemoveDTO;
-import soo.receipt_writer.receipt.repository.Receipt;
+import soo.receipt_writer.receipt.controller.io.ReceiptRemoveRequest;
+import soo.receipt_writer.receipt.controller.io.ReceiptRequest;
+import soo.receipt_writer.receipt.repository.dao.GetMaxSeqDAO;
+import soo.receipt_writer.receipt.repository.dao.ReceiptRemoveDAO;
+import soo.receipt_writer.receipt.repository.dao.ReceiptInsertDAO;
 import soo.receipt_writer.receipt.repository.ReceiptRepository;
-import soo.receipt_writer.receipt.repository.dto.ReceiptSelectAllDTO;
+import soo.receipt_writer.receipt.repository.dao.ReceiptSelectAllDAO;
 
 import java.util.List;
 
@@ -19,12 +22,21 @@ public class ReceiptService {
 
     private final ReceiptRepository receiptRepository;
 
-    public int addReceipt(Receipt receipt) {
+    public int addReceipt(ReceiptRequest receipt) {
 
-        long maxSeq = receiptRepository.getMaxSeq(receipt);
-        receipt.setSeq(maxSeq);
+        long maxSeq = receiptRepository.getMaxSeq(
+                new GetMaxSeqDAO(LoginUtils.loginSession().getUserId(), receipt.paymentDate())
+        );
 
-        int result = receiptRepository.insertOne(receipt);
+        int result = receiptRepository.insertOne(
+                new ReceiptInsertDAO(
+                        LoginUtils.loginSession().getUserId(),
+                        receipt.paymentDate(),
+                        maxSeq,
+                        receipt.paymentAmount(),
+                        receipt.paymentLocation()
+                )
+        );
 
         if (result == 0) {
             throw new InvalidInputException("영수증 추가에 실패했습니다.");
@@ -33,11 +45,15 @@ public class ReceiptService {
         return result;
     }
 
-    public List<ReceiptSelectAllDTO> selectAll() {
+    public List<ReceiptSelectAllDAO> selectAll() {
         return receiptRepository.selectAll(LoginUtils.loginSession().getUserId());
     }
 
-    public int removeReceipt(ReceiptRemoveDTO removeDTO) {
+    public int removeReceipt(ReceiptRemoveRequest request) {
+
+        String userId = LoginUtils.loginSession().getUserId();
+
+        ReceiptRemoveDAO removeDTO = new ReceiptRemoveDAO(userId, request.seq(), request.paymentDate());
         return receiptRepository.removeReceipt(removeDTO);
     }
 }

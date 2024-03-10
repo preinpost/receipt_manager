@@ -1,14 +1,12 @@
-package soo.receipt_writer.receipt.repository.dto;
+package soo.receipt_writer.receipt.repository.dao;
 
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public record ReceiptSelectAllDTO(
-        String receiptYear,
-        String receiptDate,
-        Long seq,
+public record ReceiptSelectAllDAO(
         String paymentDate,
+        Long seq,
         String paymentAmount,
         String paymentLocation
 ) {

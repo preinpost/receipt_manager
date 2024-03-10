@@ -8,8 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
-import soo.receipt_writer.receipt.repository.Receipt;
-import soo.receipt_writer.receipt.repository.dto.ReceiptSelectAllDTO;
+import soo.receipt_writer.receipt.repository.dao.ReceiptSelectAllDAO;
 import soo.receipt_writer.receipt.service.ReceiptService;
 
 import java.io.IOException;
@@ -45,7 +44,7 @@ public class PageController {
         }
         log.debug("pageable = {}", pageParams);
 
-        List<ReceiptSelectAllDTO> receiptList = receiptService.selectAll();
+        List<ReceiptSelectAllDAO> receiptList = receiptService.selectAll();
 
         log.debug("receiptList = {}", receiptList);
 
