@@ -8,9 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
-import soo.receipt_writer.receipt.repository.Receipt;
-import soo.receipt_writer.receipt.repository.dto.ReceiptSelectAllDTO;
+import soo.receipt_writer.receipt.repository.dao.ReceiptSelectAllDAO;
 import soo.receipt_writer.receipt.service.ReceiptService;
+import soo.receipt_writer.utils.AmountDisplayUtil;
 
 import java.io.IOException;
 import java.util.List;
@@ -45,13 +45,15 @@ public class PageController {
         }
         log.debug("pageable = {}", pageParams);
 
-        List<ReceiptSelectAllDTO> receiptList = receiptService.selectAll();
+        List<ReceiptSelectAllDAO> receiptList = receiptService.selectAll(pageParams);
+        Long totalAmount = receiptService.monthTotalAmount(pageParams);
 
         log.debug("receiptList = {}", receiptList);
 
         model.addAttribute("year", pageParams.year());
         model.addAttribute("month", pageParams.month());
         model.addAttribute("receiptList", receiptList);
+        model.addAttribute("totalAmount", AmountDisplayUtil.format(totalAmount));
 
         return "month-list";
     }

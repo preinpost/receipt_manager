@@ -1,14 +1,13 @@
-package soo.receipt_writer.receipt.repository.dto;
+package soo.receipt_writer.receipt.repository.dao;
 
-import java.text.NumberFormat;
+import soo.receipt_writer.utils.AmountDisplayUtil;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public record ReceiptSelectAllDTO(
-        String receiptYear,
-        String receiptDate,
-        Long seq,
+public record ReceiptSelectAllDAO(
         String paymentDate,
+        Long seq,
         String paymentAmount,
         String paymentLocation
 ) {
@@ -20,7 +19,6 @@ public record ReceiptSelectAllDTO(
     }
 
     public String getPaymentAmountWithComma() {
-        NumberFormat numberFormat = NumberFormat.getInstance();
-        return numberFormat.format(Long.parseLong(this.paymentAmount));
+        return AmountDisplayUtil.format(this.paymentAmount);
     }
 }

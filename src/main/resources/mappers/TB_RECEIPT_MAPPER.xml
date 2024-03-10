@@ -1,62 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="TB_RECEIPT">
-    <select id="selectOne" resultType="soo.receipt_writer.receipt.repository.Receipt">
+    <select id="selectOne" resultType="soo.receipt_writer.receipt.repository.dao.ReceiptInsertDAO">
         SELECT *
         FROM TB_RECEIPT
         WHERE USER_ID = #{userId}
         ;
     </select>
 
-    <select id="getMaxSeq" parameterType="soo.receipt_writer.receipt.repository.Receipt" resultType="long">
+    <select id="getMaxSeq" parameterType="soo.receipt_writer.receipt.repository.dao.GetMaxSeqDAO" resultType="long">
         SELECT COALESCE(MAX(SEQ + 1), 0)
         FROM TB_RECEIPT
-        WHERE USER_ID = #{userId}
-          AND RECEIPT_YEAR = #{receiptYear}
-          AND RECEIPT_DATE = #{receiptDate}
-          AND PAYMENT_DATE = #{paymentDate}
+        WHERE USER_ID       = #{userId}
+          AND PAYMENT_DATE  = #{paymentDate}
         ;
     </select>
 
-    <select id="selectAll" parameterType="String" resultType="soo.receipt_writer.receipt.repository.dto.ReceiptSelectAllDTO">
-        SELECT receipt_year
-              ,receipt_date
+    <select id="selectAllByMonth" parameterType="soo.receipt_writer.receipt.repository.dao.SelectAllByMonthParams" resultType="soo.receipt_writer.receipt.repository.dao.ReceiptSelectAllDAO">
+        SELECT payment_date
               ,seq
-              ,payment_date
               ,payment_amount
               ,payment_location
         FROM TB_RECEIPT
         WHERE USER_ID = #{userId}
+          AND payment_date BETWEEN #{dateStart} AND #{dateEnd}
           AND DEL_YN = 'N'
         ;
     </select>
 
-    <insert id="insertOne" parameterType="soo.receipt_writer.receipt.repository.Receipt">
+    <insert id="insertOne" parameterType="soo.receipt_writer.receipt.repository.dao.ReceiptInsertDAO">
         INSERT INTO TB_RECEIPT (
              USER_ID
-            ,RECEIPT_YEAR
-            ,RECEIPT_DATE
-            ,SEQ
             ,PAYMENT_DATE
+            ,SEQ
             ,PAYMENT_AMOUNT
             ,PAYMENT_LOCATION
         )
         VALUES (
              #{userId}
-            ,#{receiptYear}
-            ,#{receiptDate}
-            ,#{seq}
             ,#{paymentDate}
+            ,#{seq}
             ,#{paymentAmount}
             ,#{paymentLocation}
         );
     </insert>
 
-    <update id="removeReceipt" parameterType="soo.receipt_writer.receipt.repository.dto.ReceiptRemoveDTO">
+    <update id="removeReceipt" parameterType="soo.receipt_writer.receipt.repository.dao.ReceiptRemoveDAO">
         UPDATE TB_RECEIPT
         SET del_yn = 'Y'
         WHERE user_id       = #{userId}
           AND seq           = #{seq}
           AND payment_date  = #{paymentDate}
     </update>
+
+    <select id="monthTotalAmount" parameterType="soo.receipt_writer.receipt.repository.dao.ReceiptMonthTotalAmountDAO" resultType="long">
+        SELECT COALESCE(SUM(payment_amount::int), 0)
+        FROM TB_RECEIPT
+        WHERE user_id = #{userId}
+          AND payment_date BETWEEN #{dateStart} AND #{dateEnd}
+
+    </select>
+
 </mapper>
