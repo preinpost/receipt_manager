@@ -58,7 +58,7 @@
         FROM TB_RECEIPT
         WHERE user_id = #{userId}
           AND payment_date BETWEEN #{dateStart} AND #{dateEnd}
-
+          AND DEL_YN = 'N'
     </select>
 
 </mapper>
