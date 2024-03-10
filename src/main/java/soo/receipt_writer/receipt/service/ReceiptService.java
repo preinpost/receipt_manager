@@ -60,12 +60,14 @@ public class ReceiptService {
         );
     }
 
-    public int removeReceipt(ReceiptRemoveRequest request) {
+    public void removeReceipt(ReceiptRemoveRequest request) {
 
         String userId = LoginUtils.loginSession().getUserId();
 
         ReceiptRemoveDAO removeDTO = new ReceiptRemoveDAO(userId, request.seq(), request.paymentDate());
-        return receiptRepository.removeReceipt(removeDTO);
+        if (receiptRepository.removeReceipt(removeDTO) <= 0) {
+            throw new RuntimeException("영수증 삭제에 실패했습니다.");
+        }
     }
 
     public Long monthTotalAmount(PageParams params) {
