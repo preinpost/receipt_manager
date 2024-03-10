@@ -38,6 +38,5 @@ jobs:
           key: ${{ secrets.REMOTE_KEY }}
           port: ${{ secrets.REMOTE_PORT }}
           script: |
-            whoami
             cd dev/project/receipt_manager
             podman-compose up --force-recreate --build -d
