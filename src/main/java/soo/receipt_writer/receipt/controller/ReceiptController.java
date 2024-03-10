@@ -1,6 +1,5 @@
 package soo.receipt_writer.receipt.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
@@ -24,7 +23,7 @@ public class ReceiptController {
     private final ReceiptService receiptService;
 
     @PostMapping("/addReceipt")
-    public SuccessResponse<Void> addReceipt(@Valid @RequestBody ReceiptRequest receipt, BindingResult bindingResult, HttpServletRequest httpRequest) {
+    public SuccessResponse<Void> addReceipt(@Valid @RequestBody ReceiptRequest receipt, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             throw new InvalidInputException("입력값을 확인해주세요.");
@@ -33,11 +32,6 @@ public class ReceiptController {
         receiptService.addReceipt(receipt);
 
         return SuccessResponse.emptyResponse();
-    }
-
-    @GetMapping("/getReceipt")
-    public SuccessResponse<List<ReceiptSelectAllDAO>> getAllReceipt() {
-        return new SuccessResponse<>(receiptService.selectAll());
     }
 
     @PostMapping("/removeReceipt")

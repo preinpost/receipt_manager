@@ -6,13 +6,22 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/jsCalendar.min.css}">
 <body>
   <div class="container mx-auto">
-    <div class="text-lg m-10">
+    <div class="text-lg mx-10 mt-10">
       <div th:text="${session.loginSession.getUserId() + '님의'}"></div>
       <div th:text="${year + '년 ' + month + '월' + '내역 입니다.'}"></div>
     </div>
+
+    <div class="flex justify-end mr-6">
+      <div class="flex">
+        <p>이번달 총 사용 금액은 &nbsp;</p>
+        <p th:text="${totalAmount} + ' 원'"></p>
+        <p>&nbsp;입니다.</p>
+      </div>
+    </div>
+
     <div class="flex flex-col container p-6 justify-center items-center">
-      <div class="flex justify-end w-full" onclick="my_modal_1.showModal()">
-        <div class="cursor-pointer">
+      <div class="flex justify-end w-full">
+        <div class="cursor-pointer" onclick="my_modal_1.showModal()">
           <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50">
             <circle cx="25" cy="25" r="20" stroke="green" stroke-width="3" fill="green"/>
             <line x1="25" y1="15" x2="25" y2="35" style="stroke:white;stroke-width:2"/>

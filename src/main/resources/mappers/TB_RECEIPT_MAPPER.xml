@@ -16,13 +16,14 @@
         ;
     </select>
 
-    <select id="selectAll" parameterType="String" resultType="soo.receipt_writer.receipt.repository.dao.ReceiptSelectAllDAO">
+    <select id="selectAllByMonth" parameterType="soo.receipt_writer.receipt.repository.dao.SelectAllByMonthParams" resultType="soo.receipt_writer.receipt.repository.dao.ReceiptSelectAllDAO">
         SELECT payment_date
               ,seq
               ,payment_amount
               ,payment_location
         FROM TB_RECEIPT
         WHERE USER_ID = #{userId}
+          AND payment_date BETWEEN #{dateStart} AND #{dateEnd}
           AND DEL_YN = 'N'
         ;
     </select>
@@ -52,10 +53,11 @@
           AND payment_date  = #{paymentDate}
     </update>
 
-    <select id="monthTotalAmount" parameterType="soo.receipt_writer.receipt.repository.dao.ReceiptCurrentMonthTotalAmountDAO" resultType="long">
-        SELECT
+    <select id="monthTotalAmount" parameterType="soo.receipt_writer.receipt.repository.dao.ReceiptMonthTotalAmountDAO" resultType="long">
+        SELECT COALESCE(SUM(payment_amount::int), 0)
         FROM TB_RECEIPT
         WHERE user_id = #{userId}
+          AND payment_date BETWEEN #{dateStart} AND #{dateEnd}
 
     </select>
 

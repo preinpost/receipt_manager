@@ -3,10 +3,7 @@ package soo.receipt_writer.receipt.repository;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
-import soo.receipt_writer.receipt.repository.dao.GetMaxSeqDAO;
-import soo.receipt_writer.receipt.repository.dao.ReceiptInsertDAO;
-import soo.receipt_writer.receipt.repository.dao.ReceiptRemoveDAO;
-import soo.receipt_writer.receipt.repository.dao.ReceiptSelectAllDAO;
+import soo.receipt_writer.receipt.repository.dao.*;
 
 import java.util.List;
 
@@ -24,16 +21,15 @@ public class ReceiptRepository {
         return session.selectOne("TB_RECEIPT.getMaxSeq", dao);
     }
 
-    public ReceiptInsertDAO selectOne() {
-        return session.selectOne("TB_RECEIPT.selectOne");
-    }
-
-    public List<ReceiptSelectAllDAO> selectAll(String userId) {
-        return session.selectList("TB_RECEIPT.selectAll", userId);
+    public List<ReceiptSelectAllDAO> selectAllByMonth(SelectAllByMonthParams params) {
+        return session.selectList("TB_RECEIPT.selectAllByMonth", params);
     }
 
     public int removeReceipt(ReceiptRemoveDAO removeDTO) {
         return session.update("TB_RECEIPT.removeReceipt", removeDTO);
     }
 
+    public long monthTotalAmount(ReceiptMonthTotalAmountDAO dao) {
+        return session.selectOne("TB_RECEIPT.monthTotalAmount", dao);
+    }
 }

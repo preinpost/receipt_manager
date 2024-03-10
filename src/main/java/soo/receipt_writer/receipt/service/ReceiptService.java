@@ -5,14 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import soo.receipt_writer.commons.config.LoginUtils;
 import soo.receipt_writer.commons.exceptions.InvalidInputException;
+import soo.receipt_writer.pages.PageParams;
 import soo.receipt_writer.receipt.controller.io.ReceiptRemoveRequest;
 import soo.receipt_writer.receipt.controller.io.ReceiptRequest;
-import soo.receipt_writer.receipt.repository.dao.GetMaxSeqDAO;
-import soo.receipt_writer.receipt.repository.dao.ReceiptRemoveDAO;
-import soo.receipt_writer.receipt.repository.dao.ReceiptInsertDAO;
 import soo.receipt_writer.receipt.repository.ReceiptRepository;
-import soo.receipt_writer.receipt.repository.dao.ReceiptSelectAllDAO;
+import soo.receipt_writer.receipt.repository.dao.*;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 
 @Slf4j
@@ -45,8 +45,19 @@ public class ReceiptService {
         return result;
     }
 
-    public List<ReceiptSelectAllDAO> selectAll() {
-        return receiptRepository.selectAll(LoginUtils.loginSession().getUserId());
+    public List<ReceiptSelectAllDAO> selectAll(PageParams params) {
+
+        YearMonth yearMonth = YearMonth.from(LocalDate.of(Integer.parseInt(params.year()), Integer.parseInt(params.month()), 1));
+        String dateStart = yearMonth.atDay(1).toString().replaceAll("-", "");
+        String dateEnd = yearMonth.atEndOfMonth().toString().replaceAll("-", "");
+
+        return receiptRepository.selectAllByMonth(
+                new SelectAllByMonthParams(
+                        LoginUtils.loginSession().getUserId(),
+                        dateStart,
+                        dateEnd
+                )
+        );
     }
 
     public int removeReceipt(ReceiptRemoveRequest request) {
@@ -55,5 +66,20 @@ public class ReceiptService {
 
         ReceiptRemoveDAO removeDTO = new ReceiptRemoveDAO(userId, request.seq(), request.paymentDate());
         return receiptRepository.removeReceipt(removeDTO);
+    }
+
+    public Long monthTotalAmount(PageParams params) {
+
+        YearMonth yearMonth = YearMonth.from(LocalDate.of(Integer.parseInt(params.year()), Integer.parseInt(params.month()), 1));
+        String dateStart = yearMonth.atDay(1).toString().replaceAll("-", "");
+        String dateEnd = yearMonth.atEndOfMonth().toString().replaceAll("-", "");
+
+        return receiptRepository.monthTotalAmount(
+                new ReceiptMonthTotalAmountDAO(
+                        LoginUtils.loginSession().getUserId(),
+                        dateStart,
+                        dateEnd
+                )
+        );
     }
 }

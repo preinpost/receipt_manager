@@ -8,6 +8,8 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import soo.receipt_writer.pages.PageParams;
+import soo.receipt_writer.pages.ParamsOrder;
 import soo.receipt_writer.receipt.controller.io.ReceiptRemoveRequest;
 import soo.receipt_writer.receipt.controller.io.ReceiptRequest;
 import soo.receipt_writer.users.LoginSession;
@@ -64,8 +66,10 @@ class ReceiptServiceTest {
         ReceiptRequest insertOne = new ReceiptRequest("20210101", "10000", "홈플러스");
         receiptService.addReceipt(insertOne);
 
+        PageParams pageParams = new PageParams("2021", "1", "0", "20", ParamsOrder.DESC);
+
         // when
-        int row = receiptService.selectAll().size();
+        int row = receiptService.selectAll(pageParams).size();
 
         // then
         assertThat(row).isEqualTo(1);
@@ -94,5 +98,31 @@ class ReceiptServiceTest {
 
         // then
         assertThat(row).isEqualTo(1);
+    }
+
+    @Test
+    void 월별총액() {
+        // given
+        User user = new User("asdas", "soo", "asd", "asd");
+        userRepository.insertOne(user);
+
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute("loginSession", new LoginSession(user.getUserId()));
+        request.setSession(session);
+
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        ReceiptRequest insertOne = new ReceiptRequest("20210101", "10000", "홈플러스");
+        receiptService.addReceipt(insertOne);
+
+        PageParams pageParams = new PageParams("2021", "1", "0", "20", ParamsOrder.DESC);
+
+        // when
+        Long totalAmount = receiptService.monthTotalAmount(pageParams);
+
+
+        // then
+        assertThat(totalAmount).isEqualTo(10000L);
     }
 }

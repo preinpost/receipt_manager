@@ -1,6 +1,7 @@
 package soo.receipt_writer.receipt.repository.dao;
 
-import java.text.NumberFormat;
+import soo.receipt_writer.utils.AmountDisplayUtil;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -18,7 +19,6 @@ public record ReceiptSelectAllDAO(
     }
 
     public String getPaymentAmountWithComma() {
-        NumberFormat numberFormat = NumberFormat.getInstance();
-        return numberFormat.format(Long.parseLong(this.paymentAmount));
+        return AmountDisplayUtil.format(this.paymentAmount);
     }
 }
