@@ -1,6 +1,6 @@
 package soo.receipt_writer.receipt.repository.dao;
 
-public record GetMaxSeqDAO(
+public record GetMaxSeqParams(
         String userId,
         String paymentDate
 ) {

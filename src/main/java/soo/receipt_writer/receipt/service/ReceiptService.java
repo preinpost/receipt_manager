@@ -25,7 +25,7 @@ public class ReceiptService {
     public int addReceipt(ReceiptRequest receipt) {
 
         long maxSeq = receiptRepository.getMaxSeq(
-                new GetMaxSeqDAO(LoginUtils.loginSession().getUserId(), receipt.paymentDate())
+                new GetMaxSeqParams(LoginUtils.loginSession().getUserId(), receipt.paymentDate())
         );
 
         int result = receiptRepository.insertOne(

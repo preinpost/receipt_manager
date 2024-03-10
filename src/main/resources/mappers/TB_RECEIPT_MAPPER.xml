@@ -8,7 +8,7 @@
         ;
     </select>
 
-    <select id="getMaxSeq" parameterType="soo.receipt_writer.receipt.repository.dao.GetMaxSeqDAO" resultType="long">
+    <select id="getMaxSeq" parameterType="soo.receipt_writer.receipt.repository.dao.GetMaxSeqParams" resultType="long">
         SELECT COALESCE(MAX(SEQ + 1), 0)
         FROM TB_RECEIPT
         WHERE USER_ID       = #{userId}
