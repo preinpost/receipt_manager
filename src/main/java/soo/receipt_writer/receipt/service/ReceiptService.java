@@ -50,12 +50,15 @@ public class ReceiptService {
         YearMonth yearMonth = YearMonth.from(LocalDate.of(Integer.parseInt(params.year()), Integer.parseInt(params.month()), 1));
         String dateStart = yearMonth.atDay(1).toString().replaceAll("-", "");
         String dateEnd = yearMonth.atEndOfMonth().toString().replaceAll("-", "");
+        String sortBy = params.sort().toString();
+        log.info("sortBy = {}", sortBy);
 
         return receiptRepository.selectAllByMonth(
                 new SelectAllByMonthParams(
                         LoginUtils.loginSession().getUserId(),
                         dateStart,
-                        dateEnd
+                        dateEnd,
+                        sortBy
                 )
         );
     }

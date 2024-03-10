@@ -25,6 +25,7 @@
         WHERE USER_ID = #{userId}
           AND payment_date BETWEEN #{dateStart} AND #{dateEnd}
           AND DEL_YN = 'N'
+        ORDER BY payment_date ${sortBy}
         ;
     </select>
 
