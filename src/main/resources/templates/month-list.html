@@ -53,7 +53,7 @@
           <label class="form-control w-full text-black">
             <div class="label"><span class="label-text">날짜</span></div>
 
-            <input id="date-field" data-format="date" type="text" name="paymentDate" placeholder="Type here"
+            <input id="date-field" data-format="date" type="text" name="paymentDate" placeholder="날짜를 선택해주세요"
                    class="input input-bordered input-info w-full"
                    onfocusin="openCalendar()" readonly/>
           </label>
@@ -61,13 +61,13 @@
 
           <label class="form-control w-full text-black">
             <div class="label"><span class="label-text">금액</span></div>
-            <input type="text" data-format="currency" name="paymentAmount" placeholder="Type here"
+            <input type="number" data-format="currency" name="paymentAmount" placeholder="금액을 입력해주세요"
                    class="input input-bordered input-info w-full" onfocus="closeCalendar()"/>
           </label>
 
           <label class="form-control w-full text-black">
             <div class="label"><span class="label-text">사용처</span></div>
-            <input type="text" name="paymentLocation" placeholder="Type here"
+            <input type="text" name="paymentLocation" placeholder="사용처를 입력해주세요"
                    class="input input-bordered input-info w-full" onfocus="closeCalendar()"/>
           </label>
         </div>
