@@ -12,12 +12,12 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ErrorResponse handleException(Exception e) {
-        log.debug("e = {}", e);
         return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler(InvalidInputException.class)
     public ErrorResponse handleInvalidInputException(InvalidInputException e) {
+        log.info("bbb");
         return new ErrorResponse(e.getMessage());
     }
 }
