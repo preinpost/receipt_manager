@@ -10,6 +10,7 @@ import soo.receipt_writer.commons.interceptor.AuthInterceptor;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -33,7 +34,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .setCacheControl(CacheControl.maxAge(3600, TimeUnit.SECONDS))
                 .setEtagGenerator((resource) -> {
                     try {
-                        FileInputStream inputStream = new FileInputStream(resource.getFile());
+                        InputStream inputStream = resource.getInputStream();
                         MessageDigest md = MessageDigest.getInstance("MD5");
                         byte[] dataBytes = new byte[1024];
 

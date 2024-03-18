@@ -15,10 +15,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<CommonResponse> {
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        if (returnType.getContainingClass().isAssignableFrom(CommonResponse.class)) {
-            return true;
-        }
-        return false;
+        return true;
     }
 
     @Override
