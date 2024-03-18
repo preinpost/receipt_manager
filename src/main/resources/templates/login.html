@@ -3,10 +3,16 @@
 <head th:replace="~{common/base :: head}"></head>
 <body>
   <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-    <div class="flex flex-col space-y-6">
+    <div class="flex flex-col space-y-3">
       <label class="form-control w-full max-w-xs">
         <input id="id-input" type="text" placeholder="아이디를 입력해주세요" class="input input-bordered w-full max-w-xs"/>
       </label>
+      <div class="form-control">
+        <label class="label cursor-pointer">
+          <span class="label-text">아이디 기억하기</span>
+          <input id="id-remember" type="checkbox" class="checkbox checkbox-primary" onchange="onChangeIdRemember(this)"/>
+        </label>
+      </div>
       <button id="get" class="btn btn-primary w-full max-w-xs">
         로그인
       </button>
@@ -19,6 +25,18 @@
 </html>
 
 <script>
+
+  if (localStorage.getItem("remember_id") !== null) {
+    document.querySelector("#id-input").value = localStorage.getItem("remember_id");
+    document.querySelector("#id-remember").checked = true;
+  }
+
+  function onChangeIdRemember(element) {
+    if (!element.checked) {
+      localStorage.removeItem("remember_id");
+    }
+  }
+
   const getBtn = document.getElementById('get');
 
   getBtn.addEventListener('click', asyncGetFn);
@@ -91,13 +109,15 @@
       return;
     }
 
+    // 로그인 기억하기 처리
+    document.querySelector("#id-remember").checked ? localStorage.setItem("remember_id", id) : localStorage.removeItem("remember_id");
+
     location.replace("/month-list");
   }
 
   function bufferToBase64url(buffer) {
 
     // modified from https://github.com/github/webauthn-json/blob/main/src/webauthn-json/base64url.ts
-
     const byteView = new Uint8Array(buffer);
     let str = "";
     for (const charCode of byteView) {
@@ -130,5 +150,4 @@
     }
     return obj;
   }
-
 </script>

@@ -30,7 +30,7 @@ jobs:
 
         run: sh ./docker_build.sh
 
-      - name: Podman Restart
+      - name: Docker Restart
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.REMOTE_HOST }}
@@ -39,4 +39,4 @@ jobs:
           port: ${{ secrets.REMOTE_PORT }}
           script: |
             cd dev/project/receipt_manager
-            podman-compose down && podman-compose pull && podman-compose up -d
+            docker compose down && docker compose pull && docker compose up -d
