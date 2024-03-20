@@ -10,18 +10,18 @@
       <div th:text="${session.loginSession.userId() + '님의'}"></div>
       <!-- <div th:text="${year + '년 ' + month + '월' + '내역 입니다.'}"></div> -->
       <div class="flex items-center">
-        <div class="dropdown dropdown-bottom">
+        <div class="dropdown [position:unset]">
           <div th:text="${year}" tabindex="0" role="button" class="btn m-1">Click</div>
-          <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-28 h-52 overflow-y-scroll">
+          <ul tabindex="0" class="dropdown-content block absolute left-0 ml-12 z-[1] menu p-2 shadow bg-base-100 rounded-box w-28 h-52 overflow-y-auto">
             <li th:each="li_year: ${yearList}">
               <a th:text="${li_year}" th:attr="onclick=|submitQueryParams('year', ${li_year})|"></a>
             </li>
           </ul>
         </div>
         <p>년</p>
-        <div class="dropdown dropdown-bottom">
+        <div class="dropdown [position:unset]">
           <div th:text="${month}" tabindex="0" role="button" class="btn m-1">Click</div>
-          <ul tabindex="0" class="dropdown-content block z-[1] menu p-2 shadow bg-base-100 rounded-box w-20 h-52 overflow-y-scroll">
+          <ul tabindex="0" class="dropdown-content block absolute left-0 ml-32 z-[1] menu p-2 shadow bg-base-100 rounded-box w-20 h-52 overflow-y-auto">
             <li th:each="li_month : ${#numbers.sequence(1, 12)}">
               <a th:text="${li_month}" th:attr="onclick=|submitQueryParams('month', ${li_month})|"></a>
             </li>
