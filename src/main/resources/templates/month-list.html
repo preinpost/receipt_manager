@@ -7,8 +7,29 @@
 <body>
   <div class="container mx-auto">
     <div class="text-lg mx-10 mt-10">
-      <div th:text="${session.loginSession.getUserId() + '님의'}"></div>
-      <div th:text="${year + '년 ' + month + '월' + '내역 입니다.'}"></div>
+      <div th:text="${session.loginSession.userId() + '님의'}"></div>
+      <!-- <div th:text="${year + '년 ' + month + '월' + '내역 입니다.'}"></div> -->
+      <div class="flex items-center">
+        <div class="dropdown dropdown-bottom">
+          <div th:text="${year}" tabindex="0" role="button" class="btn m-1">Click</div>
+          <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-28 h-52 overflow-y-scroll">
+            <li th:each="li_year: ${yearList}">
+              <a th:text="${li_year}" th:attr="onclick=|submitQueryParams('year', ${li_year})|"></a>
+            </li>
+          </ul>
+        </div>
+        <p>년</p>
+        <div class="dropdown dropdown-bottom">
+          <div th:text="${month}" tabindex="0" role="button" class="btn m-1">Click</div>
+          <ul tabindex="0" class="dropdown-content block z-[1] menu p-2 shadow bg-base-100 rounded-box w-20 h-52 overflow-y-scroll">
+            <li th:each="li_month : ${#numbers.sequence(1, 12)}">
+              <a th:text="${li_month}" th:attr="onclick=|submitQueryParams('month', ${li_month})|"></a>
+            </li>
+          </ul>
+        </div>
+        <p>월 내역 입니다.</p>
+      </div>
+
     </div>
 
     <div class="flex justify-end mr-6">
@@ -29,7 +50,7 @@
           </svg>
         </div>
       </div>
-      <div th:each="receipt : ${receiptList}" class="card card-compact bg-blue-400 text-white w-72 my-3 px-2">
+      <div th:each="receipt : ${receiptList}" class="card card-compact bg-fuchsia-300 text-white w-full my-3 px-2">
         <div class="card-body">
           <div class="flex justify-between card-title">
             <div th:text="${receipt.getPaymentDateWithFormat()}"></div>
@@ -222,6 +243,32 @@
 
       document.getElementById('alert-modal').close();
     });
+  }
+
+  function submitQueryParams(key, value) {
+    const searchParams = new URLSearchParams(window.location.search);
+
+    console.log("key = ", key);
+    console.log("value = ", value);
+
+    let url = '/month-list?';
+
+    let params = {};
+
+    for (const [k, v] of searchParams.entries()) {
+      params = {
+        ...params,
+        [k]: v
+      }
+    }
+
+    params[key] = value;
+
+    for (const [k, v] of Object.entries(params)) {
+      url += `${k}=${v}&`;
+    }
+
+    window.location.href = url;
   }
 
 </script>

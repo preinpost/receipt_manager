@@ -1,26 +1,15 @@
 package soo.receipt_writer.users.repository;
 
 import jakarta.annotation.Nullable;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
-@Getter @Setter @ToString
-@AllArgsConstructor
-public class User {
-
-    private String uid;
-
-    private String userId;
-
-    @Nullable
-    private String password;
-
-    @Nullable
-    private String passkey;
-
-    static public User addPasskeyUser(String uid, String userId, String passkey) {
-        return new User(uid, userId, null, passkey);
-    }
+public record User(
+        String uid,
+        String userId,
+        @Nullable
+        String password,
+        @Nullable
+        String passkey,
+        String joinDate,
+        String delYn
+) {
 }

@@ -25,12 +25,12 @@ public class ReceiptService {
     public int addReceipt(ReceiptRequest receipt) {
 
         long maxSeq = receiptRepository.getMaxSeq(
-                new GetMaxSeqParams(LoginUtils.loginSession().getUserId(), receipt.paymentDate())
+                new GetMaxSeqParams(LoginUtils.loginSession().userId(), receipt.paymentDate())
         );
 
         int result = receiptRepository.insertOne(
                 new ReceiptInsertDAO(
-                        LoginUtils.loginSession().getUserId(),
+                        LoginUtils.loginSession().userId(),
                         receipt.paymentDate(),
                         maxSeq,
                         receipt.paymentAmount(),
@@ -47,15 +47,14 @@ public class ReceiptService {
 
     public List<ReceiptSelectAllDAO> selectAll(PageParams params) {
 
-        YearMonth yearMonth = YearMonth.from(LocalDate.of(Integer.parseInt(params.year()), Integer.parseInt(params.month()), 1));
+        YearMonth yearMonth = YearMonth.from(LocalDate.of(params.year(), params.month(), 1));
         String dateStart = yearMonth.atDay(1).toString().replaceAll("-", "");
         String dateEnd = yearMonth.atEndOfMonth().toString().replaceAll("-", "");
         String sortBy = params.sort().toString();
-        log.info("sortBy = {}", sortBy);
 
         return receiptRepository.selectAllByMonth(
                 new SelectAllByMonthParams(
-                        LoginUtils.loginSession().getUserId(),
+                        LoginUtils.loginSession().userId(),
                         dateStart,
                         dateEnd,
                         sortBy
@@ -65,7 +64,7 @@ public class ReceiptService {
 
     public void removeReceipt(ReceiptRemoveRequest request) {
 
-        String userId = LoginUtils.loginSession().getUserId();
+        String userId = LoginUtils.loginSession().userId();
 
         ReceiptRemoveDAO removeDTO = new ReceiptRemoveDAO(userId, request.seq(), request.paymentDate());
         if (receiptRepository.removeReceipt(removeDTO) <= 0) {
@@ -75,13 +74,13 @@ public class ReceiptService {
 
     public Long monthTotalAmount(PageParams params) {
 
-        YearMonth yearMonth = YearMonth.from(LocalDate.of(Integer.parseInt(params.year()), Integer.parseInt(params.month()), 1));
+        YearMonth yearMonth = YearMonth.from(LocalDate.of(params.year(), params.month(), 1));
         String dateStart = yearMonth.atDay(1).toString().replaceAll("-", "");
         String dateEnd = yearMonth.atEndOfMonth().toString().replaceAll("-", "");
 
         return receiptRepository.monthTotalAmount(
                 new ReceiptMonthTotalAmountDAO(
-                        LoginUtils.loginSession().getUserId(),
+                        LoginUtils.loginSession().userId(),
                         dateStart,
                         dateEnd
                 )

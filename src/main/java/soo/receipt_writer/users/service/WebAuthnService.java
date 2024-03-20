@@ -25,7 +25,10 @@ import soo.receipt_writer.users.dto.authentication.AuthenticationResponseJson;
 import soo.receipt_writer.users.dto.registration.PublicKey;
 import soo.receipt_writer.users.dto.registration.RegistrationInfo;
 import soo.receipt_writer.users.dto.registration.RegistrationResponseJSON;
+import soo.receipt_writer.users.repository.dao.RegisterUserDAO;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.UUID;
 
@@ -101,10 +104,11 @@ public class WebAuthnService {
         log.debug("passkeyBase64.length() = {}", passkeyBase64.length());
 
         userRepository.insertOne(
-                User.addPasskeyUser(
+                new RegisterUserDAO(
                         ((WebauthnSession) session.getAttribute("webauthnSession")).getUuid().toString(),
                         ((WebauthnSession) session.getAttribute("webauthnSession")).getUserId(),
-                        passkeyBase64
+                        passkeyBase64,
+                        LocalDate.now(ZoneId.of("Asia/Seoul")).toString().replaceAll("-", "")
                 )
         );
     }
@@ -112,18 +116,18 @@ public class WebAuthnService {
     public PublicKeyCredentialRequestOptions getAuthenticationChallenge(AuthenticationInfo info) {
         User userData = userRepository.selectOneById(info.getId());
 
-        if(userData == null) {
+        if (userData == null) {
             throw new RuntimeException("사용자가 없습니다.");
         }
 
         PublicKeyCredentialRpEntity rp = new PublicKeyCredentialRpEntity(webAuthnProperty.getRp(), webAuthnProperty.getRpName());
         DefaultChallenge challenge = new DefaultChallenge();
 
-        Authenticator authenticator = base64ToAuthenticator(userData.getPasskey());
+        Authenticator authenticator = base64ToAuthenticator(userData.passkey());
         PublicKeyCredentialDescriptor publicKeyCredentialDescriptor = new PublicKeyCredentialDescriptor(PublicKeyCredentialType.PUBLIC_KEY, authenticator.getAttestedCredentialData().getCredentialId(), authenticator.getTransports());
         UserVerificationRequirement userVerificationRequirement = UserVerificationRequirement.PREFERRED;
 
-        session.setAttribute("webauthnSession", new WebauthnSession(UUID.fromString(userData.getUid()), info.getId(), challenge, authenticator));
+        session.setAttribute("webauthnSession", new WebauthnSession(UUID.fromString(userData.uid()), info.getId(), challenge, authenticator));
 
         return new PublicKeyCredentialRequestOptions(challenge, 60000L, rp.getId(), List.of(publicKeyCredentialDescriptor), userVerificationRequirement, null);
     }
@@ -150,6 +154,9 @@ public class WebAuthnService {
 
         AuthenticationData response = webAuthnManager.validate(authenticationRequest, authenticationParameters);
 
-        session.setAttribute("loginSession", new LoginSession(((WebauthnSession) session.getAttribute("webauthnSession")).getUserId()));
+        String userId = ((WebauthnSession) session.getAttribute("webauthnSession")).getUserId();
+        User user = userRepository.selectOneById(userId);
+
+        session.setAttribute("loginSession", new LoginSession(user.userId(), user.joinDate()));
     }
 }

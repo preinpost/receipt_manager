@@ -11,18 +11,18 @@
         SELECT * FROM TB_USER;
     </select>
 
-    <insert id="insertOne" parameterType="soo.receipt_writer.users.repository.User">
+    <insert id="insertOne" parameterType="soo.receipt_writer.users.repository.dao.RegisterUserDAO">
         INSERT INTO TB_USER (
              uid
             ,user_id
-            ,password
             ,passkey
+            ,join_date
         )
         VALUES (
              #{uid}
             ,#{userId}
-            ,#{password}
             ,#{passkey}
+            ,#{joinDate}
         );
     </insert>
 </mapper>

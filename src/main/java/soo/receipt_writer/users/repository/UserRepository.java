@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import soo.receipt_writer.users.repository.dao.RegisterUserDAO;
 
 @Slf4j
 @Repository
@@ -12,7 +13,7 @@ public class UserRepository {
 
     private final SqlSession session;
 
-    public int insertOne(User user) {
+    public int insertOne(RegisterUserDAO user) {
         return session.insert("TB_USER.insertOne", user);
     }
 

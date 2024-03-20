@@ -16,6 +16,7 @@ import soo.receipt_writer.receipt.controller.io.ReceiptRequest;
 import soo.receipt_writer.users.LoginSession;
 import soo.receipt_writer.users.repository.User;
 import soo.receipt_writer.users.repository.UserRepository;
+import soo.receipt_writer.users.repository.dao.RegisterUserDAO;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
@@ -30,14 +31,14 @@ class ReceiptServiceTest {
     @Autowired
     UserRepository userRepository;
 
-    User user = new User("asdas", "soo", "asd", "asd");
+    User user = new User("asdas", "soo", "asd", "asd", "20230101", "N");
     MockHttpServletRequest request = new MockHttpServletRequest();
     MockHttpSession session = new MockHttpSession();
 
     @BeforeEach
     public void setUp() {
-        userRepository.insertOne(user);
-        session.setAttribute("loginSession", new LoginSession(user.getUserId()));
+        userRepository.insertOne(new RegisterUserDAO("asdas", "soo", "asd", "20230101"));
+        session.setAttribute("loginSession", new LoginSession(user.userId(), "20240101"));
         request.setSession(session);
 
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
